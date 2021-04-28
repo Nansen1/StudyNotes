@@ -1,5 +1,5 @@
 - Mac终端中使用Sublime命令行打开文件
-
+https://www.jianshu.com/p/b77f058dd4a7?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
     Sublime自带命令行工具路径为/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl
 
     通过ln命令为上述subl工具创建一个快捷方式，并将此快捷方式放到/usr/local/bin路径下，此路径是包含在$PATH中
