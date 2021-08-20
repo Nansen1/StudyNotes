@@ -1,0 +1,355 @@
+<html>
+
+<body>
+    <article class="baidu_pl">
+        <div id="article_content" class="article_content clearfix">
+            <link rel="stylesheet"
+                href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/ck_htmledit_views-b5506197d8.css">
+            <div id="content_views" class="markdown_views">
+                <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                    <path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block"
+                        style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+                </svg>
+                <p>本文是第5篇</p>
+                <p>(1)概述 <br> <a
+                        href="https://blog.csdn.net/a897180673/article/details/80548567">https://blog.csdn.net/a897180673/article/details/80548567</a>
+                    <br> (2)域控安装 <br> <a
+                        href="https://blog.csdn.net/a897180673/article/details/80563296">https://blog.csdn.net/a897180673/article/details/80563296</a>
+                    <br> (3)office online安装 <br> <a
+                        href="https://blog.csdn.net/a897180673/article/details/80569869">https://blog.csdn.net/a897180673/article/details/80569869</a>
+                    <br> (4)关联配置 <br> <a
+                        href="https://blog.csdn.net/a897180673/article/details/80623207">https://blog.csdn.net/a897180673/article/details/80623207</a>
+                </p>
+                <p>所有的软件安装和配置全部ok了,下面就是代码运行了.</p>
+                <p>1.域控服务器安装java环境 <br> 我们的java 代码在域控服务器上面运行,所以要现在域控服务器上面安装java环境,这个就不演示了,网上windows安装java教程一大推</p>
+                <p>2.启动office Online 服务器场</p>
+                <p>这里又是一个新名词:服务器场 ,打开安装office Online 的主机</p>
+                <p>打开powerShell </p>
+                <p>(1) 输入 Import-Module OfficeWebApps 回车.</p>
+                <p>(2)运行下列命令部署服务器场: <br> New-OfficeWebAppsFarm -InternalURL “<a
+                        href="http://WIN-5LDI2SVJQOJ.test.com">http://WIN-5LDI2SVJQOJ.test.com</a>” -ExternalUrl “<a
+                        href="http://192.168.37.138">http://192.168.37.138</a>” -AllowHttp –EditingEnabled</p>
+                <p>–InternalURL内部访问地址，一般是<a href="http://office">http://office</a>主机名.AD域控地址； <br> 我的officeOnline主机的名字:
+                </p>
+                <p><img src="https://img-blog.csdn.net/20180704172427750?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>–AllowHttp 是否允许http访问；</p>
+                <p>–ExternalUrl 外部访问地址，一般是服务器的ip地址；</p>
+                <p>–EditingEnabled 允许编辑office。</p>
+                <p>输入第二条命令后 等待一会,就会ok,如下图:</p>
+                <p><img src="https://img-blog.csdn.net/20180704172712364?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>这个时候用可以看下有没有启动起来</p>
+                <p>在office online 的浏览器 输入:<a
+                        href="http://win-5ldi2svjqoj.test.com/hosting/discovery">http://win-5ldi2svjqoj.test.com/hosting/discovery</a>
+                    <br> 得到以下的结果就ok 了</p>
+                <p><img src="https://img-blog.csdn.net/20180704174704332?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>当然通过ip地址访问也是ok,<a
+                        href="http://192.168.37.138/hosting/discovery">http://192.168.37.138/hosting/discovery</a></p>
+                <p>当然这两个地址在域控服务器上面访问 也是ok 的</p>
+                <p>3.安装好java环境后,启动服务场后,开始上代码</p>
+                <pre class="prettyprint"
+                    name="code"><code class="language-java hljs  has-numbering" onclick="mdcp.copyCode(event)" style="position: unset;"><span class="hljs-keyword">package</span> com.wopihost.controller;
+
+<span class="hljs-keyword">import</span> com.fasterxml.jackson.core.JsonProcessingException;
+<span class="hljs-keyword">import</span> com.fasterxml.jackson.databind.ObjectMapper;
+<span class="hljs-keyword">import</span> com.wopihost.entity.FileInfo;
+<span class="hljs-keyword">import</span> org.apache.tomcat.util.codec.binary.Base64;
+<span class="hljs-keyword">import</span> org.springframework.beans.factory.annotation.Value;
+<span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.*;
+
+<span class="hljs-keyword">import</span> javax.servlet.http.HttpServletRequest;
+<span class="hljs-keyword">import</span> javax.servlet.http.HttpServletResponse;
+<span class="hljs-keyword">import</span> java.io.*;
+<span class="hljs-keyword">import</span> java.net.URLDecoder;
+<span class="hljs-keyword">import</span> java.security.MessageDigest;
+<span class="hljs-keyword">import</span> java.security.NoSuchAlgorithmException;
+
+<span class="hljs-javadoc">/**
+ * WOPI HOST
+ * Created by ethendev on 2017/4/15.
+ */</span>
+<span class="hljs-annotation">@RestController</span>
+<span class="hljs-annotation">@RequestMapping</span>(value=<span class="hljs-string">"/wopi"</span>)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WopiHostContrller</span> {<!-- --></span>
+
+    <span class="hljs-annotation">@Value</span>(<span class="hljs-string">"${file.path}"</span>)
+    <span class="hljs-keyword">private</span> String filePath;
+
+    <span class="hljs-javadoc">/**
+     * 获取文件流
+     *<span class="hljs-javadoctag"> @param</span> name
+     *<span class="hljs-javadoctag"> @param</span> response
+     */</span>
+    <span class="hljs-annotation">@GetMapping</span>(<span class="hljs-string">"/files/{name}/contents"</span>)
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getFile</span>(@<span class="hljs-title">PathVariable</span>(name = <span class="hljs-string">"name"</span>) String name, HttpServletResponse response) {
+        System.out.println(<span class="hljs-string">"GET获取文件啦!!!!"</span>);
+        InputStream fis = <span class="hljs-keyword">null</span>;
+        OutputStream toClient = <span class="hljs-keyword">null</span>;
+        <span class="hljs-keyword">try</span> {
+            <span class="hljs-comment">// 文件的路径</span>
+            String path = filePath + name;
+            File file = <span class="hljs-keyword">new</span> File(path);
+            <span class="hljs-comment">// 取得文件名</span>
+            String filename = file.getName();
+            <span class="hljs-comment">// 以流的形式下载文件</span>
+            fis = <span class="hljs-keyword">new</span> BufferedInputStream(<span class="hljs-keyword">new</span> FileInputStream(path));
+            <span class="hljs-keyword">byte</span>[] buffer = <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[fis.available()];
+            fis.read(buffer);
+            <span class="hljs-comment">// 清空response</span>
+            response.reset();
+
+            <span class="hljs-comment">// 设置response的Header</span>
+            response.addHeader(<span class="hljs-string">"Content-Disposition"</span>, <span class="hljs-string">"attachment;filename="</span> +
+                    <span class="hljs-keyword">new</span> String(filename.getBytes(<span class="hljs-string">"utf-8"</span>), <span class="hljs-string">"ISO-8859-1"</span>));
+            response.addHeader(<span class="hljs-string">"Content-Length"</span>, <span class="hljs-string">""</span> + file.length());
+            toClient = <span class="hljs-keyword">new</span> BufferedOutputStream(response.getOutputStream());
+            response.setContentType(<span class="hljs-string">"application/octet-stream"</span>);
+            toClient.write(buffer);
+            toClient.flush();
+            System.out.println(<span class="hljs-string">"GET获取文件Contents结束!!!!"</span>);
+
+        } <span class="hljs-keyword">catch</span> (IOException ex) {
+            ex.printStackTrace();
+        } <span class="hljs-keyword">finally</span> {
+            <span class="hljs-keyword">try</span> {
+                fis.close();
+                toClient.close();
+            } <span class="hljs-keyword">catch</span> (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    <span class="hljs-javadoc">/**
+     * 保存更新文件
+     *<span class="hljs-javadoctag"> @param</span> name
+     *<span class="hljs-javadoctag"> @param</span> content
+     */</span>
+    <span class="hljs-annotation">@PostMapping</span>(<span class="hljs-string">"/files/{name}/contents"</span>)
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">postFile</span>(@<span class="hljs-title">PathVariable</span>(name = <span class="hljs-string">"name"</span>) String name, <span class="hljs-annotation">@RequestBody</span> <span class="hljs-keyword">byte</span>[] content) {
+        System.out.println(<span class="hljs-string">"POST获取文件Contents啦!!!!"</span>);
+        <span class="hljs-comment">// 文件的路径</span>
+        String path = filePath + name;
+        File file = <span class="hljs-keyword">new</span> File(path);
+        FileOutputStream fop = <span class="hljs-keyword">null</span>;
+        <span class="hljs-keyword">try</span> {
+            <span class="hljs-keyword">if</span> (!file.exists()) {
+                file.createNewFile();<span class="hljs-comment">//构建文件</span>
+            }
+            fop = <span class="hljs-keyword">new</span> FileOutputStream(file);
+            fop.write(content);
+            fop.flush();
+            System.out.println(<span class="hljs-string">"POST获取文件结束!!!!"</span>);
+
+            System.out.println(<span class="hljs-string">"------------ save file ------------ "</span>);
+        } <span class="hljs-keyword">catch</span> (IOException e) {
+            e.printStackTrace();
+        } <span class="hljs-keyword">finally</span> {
+            <span class="hljs-keyword">try</span> {
+                fop.close();
+            } <span class="hljs-keyword">catch</span> (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    <span class="hljs-javadoc">/**
+     * 获取文件信息
+     *<span class="hljs-javadoctag"> @param</span> request
+     *<span class="hljs-javadoctag"> @param</span> response
+     *<span class="hljs-javadoctag"> @return</span>
+     *<span class="hljs-javadoctag"> @throws</span> UnsupportedEncodingException
+     */</span>
+    <span class="hljs-annotation">@GetMapping</span>(<span class="hljs-string">"/files/{name}"</span>)
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getFileInfo</span>(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println(<span class="hljs-string">"获取文件啦!!!!"</span>);
+        String uri = request.getRequestURI();
+        FileInfo info = <span class="hljs-keyword">new</span> FileInfo();
+        <span class="hljs-keyword">try</span> {
+            <span class="hljs-comment">// 获取文件名, 防止中文文件名乱码</span>
+            String fileName = URLDecoder.decode(uri.substring(uri.indexOf(<span class="hljs-string">"wopi/files/"</span>) + <span class="hljs-number">11</span>, uri.length()), <span class="hljs-string">"UTF-8"</span>);
+            <span class="hljs-keyword">if</span> (fileName != <span class="hljs-keyword">null</span> &amp;&amp; fileName.length() &gt; <span class="hljs-number">0</span>) {
+                System.out.println(<span class="hljs-string">"文件不为空啊"</span>);
+                File file = <span class="hljs-keyword">new</span> File(filePath + fileName);
+                <span class="hljs-keyword">if</span> (file.exists()) {
+                    <span class="hljs-comment">// 取得文件名</span>
+                    info.setBaseFileName(file.getName());
+                    info.setSize(file.length());
+                    info.setOwnerId(<span class="hljs-string">"admin"</span>);
+                    info.setVersion(file.lastModified());
+                    info.setSha256(getHash256(file));
+                    info.setAllowExternalMarketplace(<span class="hljs-keyword">true</span>);
+                    info.setUserCanWrite(<span class="hljs-keyword">true</span>);
+                    info.setSupportsUpdate(<span class="hljs-keyword">true</span>);
+                    info.setSupportsLocks(<span class="hljs-keyword">true</span>);
+                }
+            }
+
+            ObjectMapper mapper = <span class="hljs-keyword">new</span> ObjectMapper();
+            String Json =  mapper.writeValueAsString(info);
+
+            response.setContentType(<span class="hljs-string">"application/json;charset=utf-8"</span>);
+            response.getWriter().write(Json);
+        } <span class="hljs-keyword">catch</span> (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } <span class="hljs-keyword">catch</span> (JsonProcessingException e) {
+            e.printStackTrace();
+        } <span class="hljs-keyword">catch</span> (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    <span class="hljs-javadoc">/**
+     * 获取文件的SHA-256值
+     *<span class="hljs-javadoctag"> @param</span> file
+     *<span class="hljs-javadoctag"> @return</span>
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String <span class="hljs-title">getHash256</span>(File file) {
+        String value = <span class="hljs-string">""</span>;
+        <span class="hljs-comment">// 获取hash值</span>
+        <span class="hljs-keyword">try</span> {
+            <span class="hljs-keyword">byte</span>[] buffer = <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[<span class="hljs-number">1024</span>];
+            <span class="hljs-keyword">int</span> numRead;
+            InputStream fis = <span class="hljs-keyword">new</span> FileInputStream(file);
+            <span class="hljs-comment">//如果想使用SHA-1或SHA-256，则传入SHA-1,SHA-256</span>
+            MessageDigest complete = MessageDigest.getInstance(<span class="hljs-string">"SHA-256"</span>);
+            do {
+                <span class="hljs-comment">//从文件读到buffer</span>
+                numRead = fis.read(buffer);
+                <span class="hljs-keyword">if</span> (numRead &gt; <span class="hljs-number">0</span>) {
+                    <span class="hljs-comment">//用读到的字节进行MD5的计算，第二个参数是偏移量</span>
+                    complete.update(buffer, <span class="hljs-number">0</span>, numRead);
+                }
+            } <span class="hljs-keyword">while</span> (numRead != -<span class="hljs-number">1</span>);
+
+            fis.close();
+            value = <span class="hljs-keyword">new</span> String(Base64.encodeBase64(complete.digest()));
+        } <span class="hljs-keyword">catch</span> (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } <span class="hljs-keyword">catch</span> (FileNotFoundException e) {
+            e.printStackTrace();
+        } <span class="hljs-keyword">catch</span> (IOException e) {
+            e.printStackTrace();
+        }
+        <span class="hljs-keyword">return</span> value;
+    }
+
+}
+
+<div class="hljs-button {2}" data-title="复制" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.4259&quot;}"></div></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li><li style="color: rgb(153, 153, 153);">8</li><li style="color: rgb(153, 153, 153);">9</li><li style="color: rgb(153, 153, 153);">10</li><li style="color: rgb(153, 153, 153);">11</li><li style="color: rgb(153, 153, 153);">12</li><li style="color: rgb(153, 153, 153);">13</li><li style="color: rgb(153, 153, 153);">14</li><li style="color: rgb(153, 153, 153);">15</li><li style="color: rgb(153, 153, 153);">16</li><li style="color: rgb(153, 153, 153);">17</li><li style="color: rgb(153, 153, 153);">18</li><li style="color: rgb(153, 153, 153);">19</li><li style="color: rgb(153, 153, 153);">20</li><li style="color: rgb(153, 153, 153);">21</li><li style="color: rgb(153, 153, 153);">22</li><li style="color: rgb(153, 153, 153);">23</li><li style="color: rgb(153, 153, 153);">24</li><li style="color: rgb(153, 153, 153);">25</li><li style="color: rgb(153, 153, 153);">26</li><li style="color: rgb(153, 153, 153);">27</li><li style="color: rgb(153, 153, 153);">28</li><li style="color: rgb(153, 153, 153);">29</li><li style="color: rgb(153, 153, 153);">30</li><li style="color: rgb(153, 153, 153);">31</li><li style="color: rgb(153, 153, 153);">32</li><li style="color: rgb(153, 153, 153);">33</li><li style="color: rgb(153, 153, 153);">34</li><li style="color: rgb(153, 153, 153);">35</li><li style="color: rgb(153, 153, 153);">36</li><li style="color: rgb(153, 153, 153);">37</li><li style="color: rgb(153, 153, 153);">38</li><li style="color: rgb(153, 153, 153);">39</li><li style="color: rgb(153, 153, 153);">40</li><li style="color: rgb(153, 153, 153);">41</li><li style="color: rgb(153, 153, 153);">42</li><li style="color: rgb(153, 153, 153);">43</li><li style="color: rgb(153, 153, 153);">44</li><li style="color: rgb(153, 153, 153);">45</li><li style="color: rgb(153, 153, 153);">46</li><li style="color: rgb(153, 153, 153);">47</li><li style="color: rgb(153, 153, 153);">48</li><li style="color: rgb(153, 153, 153);">49</li><li style="color: rgb(153, 153, 153);">50</li><li style="color: rgb(153, 153, 153);">51</li><li style="color: rgb(153, 153, 153);">52</li><li style="color: rgb(153, 153, 153);">53</li><li style="color: rgb(153, 153, 153);">54</li><li style="color: rgb(153, 153, 153);">55</li><li style="color: rgb(153, 153, 153);">56</li><li style="color: rgb(153, 153, 153);">57</li><li style="color: rgb(153, 153, 153);">58</li><li style="color: rgb(153, 153, 153);">59</li><li style="color: rgb(153, 153, 153);">60</li><li style="color: rgb(153, 153, 153);">61</li><li style="color: rgb(153, 153, 153);">62</li><li style="color: rgb(153, 153, 153);">63</li><li style="color: rgb(153, 153, 153);">64</li><li style="color: rgb(153, 153, 153);">65</li><li style="color: rgb(153, 153, 153);">66</li><li style="color: rgb(153, 153, 153);">67</li><li style="color: rgb(153, 153, 153);">68</li><li style="color: rgb(153, 153, 153);">69</li><li style="color: rgb(153, 153, 153);">70</li><li style="color: rgb(153, 153, 153);">71</li><li style="color: rgb(153, 153, 153);">72</li><li style="color: rgb(153, 153, 153);">73</li><li style="color: rgb(153, 153, 153);">74</li><li style="color: rgb(153, 153, 153);">75</li><li style="color: rgb(153, 153, 153);">76</li><li style="color: rgb(153, 153, 153);">77</li><li style="color: rgb(153, 153, 153);">78</li><li style="color: rgb(153, 153, 153);">79</li><li style="color: rgb(153, 153, 153);">80</li><li style="color: rgb(153, 153, 153);">81</li><li style="color: rgb(153, 153, 153);">82</li><li style="color: rgb(153, 153, 153);">83</li><li style="color: rgb(153, 153, 153);">84</li><li style="color: rgb(153, 153, 153);">85</li><li style="color: rgb(153, 153, 153);">86</li><li style="color: rgb(153, 153, 153);">87</li><li style="color: rgb(153, 153, 153);">88</li><li style="color: rgb(153, 153, 153);">89</li><li style="color: rgb(153, 153, 153);">90</li><li style="color: rgb(153, 153, 153);">91</li><li style="color: rgb(153, 153, 153);">92</li><li style="color: rgb(153, 153, 153);">93</li><li style="color: rgb(153, 153, 153);">94</li><li style="color: rgb(153, 153, 153);">95</li><li style="color: rgb(153, 153, 153);">96</li><li style="color: rgb(153, 153, 153);">97</li><li style="color: rgb(153, 153, 153);">98</li><li style="color: rgb(153, 153, 153);">99</li><li style="color: rgb(153, 153, 153);">100</li><li style="color: rgb(153, 153, 153);">101</li><li style="color: rgb(153, 153, 153);">102</li><li style="color: rgb(153, 153, 153);">103</li><li style="color: rgb(153, 153, 153);">104</li><li style="color: rgb(153, 153, 153);">105</li><li style="color: rgb(153, 153, 153);">106</li><li style="color: rgb(153, 153, 153);">107</li><li style="color: rgb(153, 153, 153);">108</li><li style="color: rgb(153, 153, 153);">109</li><li style="color: rgb(153, 153, 153);">110</li><li style="color: rgb(153, 153, 153);">111</li><li style="color: rgb(153, 153, 153);">112</li><li style="color: rgb(153, 153, 153);">113</li><li style="color: rgb(153, 153, 153);">114</li><li style="color: rgb(153, 153, 153);">115</li><li style="color: rgb(153, 153, 153);">116</li><li style="color: rgb(153, 153, 153);">117</li><li style="color: rgb(153, 153, 153);">118</li><li style="color: rgb(153, 153, 153);">119</li><li style="color: rgb(153, 153, 153);">120</li><li style="color: rgb(153, 153, 153);">121</li><li style="color: rgb(153, 153, 153);">122</li><li style="color: rgb(153, 153, 153);">123</li><li style="color: rgb(153, 153, 153);">124</li><li style="color: rgb(153, 153, 153);">125</li><li style="color: rgb(153, 153, 153);">126</li><li style="color: rgb(153, 153, 153);">127</li><li style="color: rgb(153, 153, 153);">128</li><li style="color: rgb(153, 153, 153);">129</li><li style="color: rgb(153, 153, 153);">130</li><li style="color: rgb(153, 153, 153);">131</li><li style="color: rgb(153, 153, 153);">132</li><li style="color: rgb(153, 153, 153);">133</li><li style="color: rgb(153, 153, 153);">134</li><li style="color: rgb(153, 153, 153);">135</li><li style="color: rgb(153, 153, 153);">136</li><li style="color: rgb(153, 153, 153);">137</li><li style="color: rgb(153, 153, 153);">138</li><li style="color: rgb(153, 153, 153);">139</li><li style="color: rgb(153, 153, 153);">140</li><li style="color: rgb(153, 153, 153);">141</li><li style="color: rgb(153, 153, 153);">142</li><li style="color: rgb(153, 153, 153);">143</li><li style="color: rgb(153, 153, 153);">144</li><li style="color: rgb(153, 153, 153);">145</li><li style="color: rgb(153, 153, 153);">146</li><li style="color: rgb(153, 153, 153);">147</li><li style="color: rgb(153, 153, 153);">148</li><li style="color: rgb(153, 153, 153);">149</li><li style="color: rgb(153, 153, 153);">150</li><li style="color: rgb(153, 153, 153);">151</li><li style="color: rgb(153, 153, 153);">152</li><li style="color: rgb(153, 153, 153);">153</li><li style="color: rgb(153, 153, 153);">154</li><li style="color: rgb(153, 153, 153);">155</li><li style="color: rgb(153, 153, 153);">156</li><li style="color: rgb(153, 153, 153);">157</li><li style="color: rgb(153, 153, 153);">158</li><li style="color: rgb(153, 153, 153);">159</li><li style="color: rgb(153, 153, 153);">160</li><li style="color: rgb(153, 153, 153);">161</li><li style="color: rgb(153, 153, 153);">162</li><li style="color: rgb(153, 153, 153);">163</li><li style="color: rgb(153, 153, 153);">164</li><li style="color: rgb(153, 153, 153);">165</li><li style="color: rgb(153, 153, 153);">166</li><li style="color: rgb(153, 153, 153);">167</li><li style="color: rgb(153, 153, 153);">168</li><li style="color: rgb(153, 153, 153);">169</li><li style="color: rgb(153, 153, 153);">170</li><li style="color: rgb(153, 153, 153);">171</li><li style="color: rgb(153, 153, 153);">172</li><li style="color: rgb(153, 153, 153);">173</li><li style="color: rgb(153, 153, 153);">174</li><li style="color: rgb(153, 153, 153);">175</li><li style="color: rgb(153, 153, 153);">176</li><li style="color: rgb(153, 153, 153);">177</li><li style="color: rgb(153, 153, 153);">178</li><li style="color: rgb(153, 153, 153);">179</li><li style="color: rgb(153, 153, 153);">180</li><li style="color: rgb(153, 153, 153);">181</li><li style="color: rgb(153, 153, 153);">182</li><li style="color: rgb(153, 153, 153);">183</li><li style="color: rgb(153, 153, 153);">184</li><li style="color: rgb(153, 153, 153);">185</li><li style="color: rgb(153, 153, 153);">186</li><li style="color: rgb(153, 153, 153);">187</li><li style="color: rgb(153, 153, 153);">188</li><li style="color: rgb(153, 153, 153);">189</li></ul></pre>
+                <p>看过了代码,再来看下,第一篇说到的那个图</p>
+                <p><img src="https://img-blog.csdn.net/20180602152931489?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>从图中可以看到,office online主机一共会回调2次域控主机,分别是 tell me about the file 还有一个是give me the file</p>
+                <p>这两次回调 分别对应下面两个接口 <br> @GetMapping(“/files/{name}”) <br> @PostMapping(“/files/{name}/contents”)</p>
+                <p>代码中,还有一个 @Value(“${file.path}”) 配置</p>
+                <p>因为 WOPI Server 主机需要把文件传给 WOPI Client 主机,那么问题来了? WOPI Server 从哪里获取文件? 这里我是直接放在WOPI Server
+                    的C盘,这个文件可以放在任何地方,只要WOPI Server可以拿到这个文件就可以,我为了方便直接放在WOPI Server的c盘</p>
+                <p>用mvn package 把 这个应用打包成war包 上传到域控 服务器上面. </p>
+                <p>4.运行域控里面的java代码,查看效果</p>
+                <p>直接在jar 包所在的目录运行cmd: </p>
+                <pre class="prettyprint"
+                    name="code"><code class="language-shell hljs lasso has-numbering" onclick="mdcp.copyCode(event)" style="position: unset;">java <span class="hljs-attribute">-jar</span> wopihost<span class="hljs-subst">-</span><span class="hljs-number">0.0</span><span class="hljs-number">.1</span><span class="hljs-attribute">-SNAPSHOT</span><span class="hljs-built_in">.</span>jar<div class="hljs-button {2}" data-title="复制" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.4259&quot;}"></div></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li></ul></pre>
+                <p>程序跑起来如图:</p>
+                <p><img src="https://img-blog.csdn.net/20180704180244735?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>我把一个123.docx放到了域控的磁盘里面,怎么才能预览word 文件? <br> 上面说到的地址 <a
+                        href="http://win-5ldi2svjqoj.test.com/hosting/discovery">http://win-5ldi2svjqoj.test.com/hosting/discovery</a>
+                    在浏览器返回的结果中搜索 word <br> 就可以看到访问的地址</p>
+                <p><img src="https://img-blog.csdn.net/20180704180810220?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>比如我要查看word ,那么主机地址就是:<a
+                        href="http://win-5ldi2svjqoj.test.com/wv/wordviewerframe.aspx">http://win-5ldi2svjqoj.test.com/wv/wordviewerframe.aspx</a>
+                    <br> 当然这个还不够</p>
+                <p>上面说过 office online 主机会 回调 域控的我们写的java 代码,但是office online主机还不知道 域控在哪里 所以在网址后面还要 <br> 加点东西 <br>
+                    整个地址是这样:<a
+                        href="http://win-5ldi2svjqoj.test.com/wv/wordviewerframe.aspx?WOPISrc=http://192.168.37.142/wopi/files/123.docx">http://win-5ldi2svjqoj.test.com/wv/wordviewerframe.aspx?WOPISrc=http://192.168.37.142/wopi/files/123.docx</a>
+                </p>
+                <p>从这个地址中可以看出,其实是域控主机访问的office online的主机,并在url中带上了域控的主机的地址WOPISrc,这样office
+                    Online主机会根据这个地址回调域控主机里面我们写的代码,一共2次,从而进行office 的显示.</p>
+                <p>把上面的这个地址输入到域控的浏览器中发现,并不能正确的显示,还报错.</p>
+                <p><img src="https://img-blog.csdn.net/20180705094007980?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>5.原因排查</p>
+                <p>半个月前弄好的时候忘记记录,现在搞突然没有用,一定是有什么细节忘记了,只好开始排查</p>
+                <p>首先是 <a
+                        href="http://win-5ldi2svjqoj.test.com/hosting/discovery">http://win-5ldi2svjqoj.test.com/hosting/discovery</a>
+                    访问这个地址的话,浏览器可以正确的返回一些数据,这个说明office online服务场是正确安装的.</p>
+                <p>然后在域控的主机上面单独的访问我们编写的wopi 的代码</p>
+                <pre class="prettyprint"
+                    name="code"><code class="language-java hljs  has-numbering" onclick="mdcp.copyCode(event)" style="position: unset;">http:<span class="hljs-comment">//127.0.0.1/wopi/files/123.docx/contents</span><div class="hljs-button {2}" data-title="复制" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.4259&quot;}"></div></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li></ul></pre>
+                <p>控制台也确实有输出,说明访问到了,但是ie由于安装没有给我们下载文件,但至少说明wopi 的代码是没有问题的.</p>
+                <p><img src="https://img-blog.csdn.net/20180704185310155?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>继续排查,这个时候突然想起一件事情,office online 的主机是会回调 域控的主机的,那么手动的去调用看看</p>
+                <p>域控的主机ip:192.168.37.142 <br> 在office online 的主机里面的浏览器输入</p>
+                <pre class="prettyprint"
+                    name="code"><code class="language-java hljs  has-numbering" onclick="mdcp.copyCode(event)" style="position: unset;"> http:<span class="hljs-comment">//192.168.37.142/wopi/files/123.docx</span><div class="hljs-button {2}" data-title="复制" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.4259&quot;}"></div></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li></ul></pre>
+                <p>显示的是无法访问网页</p>
+                <p><img src="https://img-blog.csdn.net/20180704185917584?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>这个时候一想,对啊,可能域控主机的防火墙没有关掉,赶紧进入域控的控制面板–&gt;windows防火墙—&gt;启动或关闭windows防火墙,将域防火墙暂时先关掉,点击确定 <br> <img
+                        src="https://img-blog.csdn.net/20180704190119960?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>这个时候再回到域控的主机 ,把上面的那个地址输入按下回车</p>
+                <p><img src="https://img-blog.csdn.net/20180704190402696?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>ok啦,结果成功的显示了,在右上角上面有 在浏览器中编辑,点击看一下.</p>
+                <p><img src="https://img-blog.csdn.net/20180704190600737?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>可以进行编辑.</p>
+                <p>大吉大利,一切都是ok 的</p>
+                <p>至此整个office online 的安装部署,java wopi 代码的运行全部ok.可喜可贺.</p>
+                <p>6.后记</p>
+                <p>在我一开始准备安装office online 的时候,同事就跟我说要用到2台机器,一台是安装域控,一台是安装office Online主机, <br> 自己也是这么摸索着安装,测试,运行.</p>
+                <p>后来在真实的项目中的时候,甲方对安全要求比较高,安装域控是要经过审核的,金融行业,对钱比较敏感,不可能随随便便让你去在他们那里安装个域控的.</p>
+                <p>重新整理下整个安装过程和代码的运行过程,其实整个过程好像和域控也没啥关系,我们的服务都是office online 主机提供的,能不能只安装这一台服务器,不安装域控了 ? </p>
+                <p>想法:直接在一台主机上面安装office online ,并在office online 主机上面配置服务场,然后在随便的另外一台主机上面运行java 编写的wopi的代码.</p>
+                <p>结果是不行的,因为在服务场的时候,运行的power shell 代码有两个参数</p>
+                <p>New-OfficeWebAppsFarm <strong><em>-InternalURL “<a
+                                href="http://WIN-5LDI2SVJQOJ.test.com">http://WIN-5LDI2SVJQOJ.test.com</a>” -ExternalUrl
+                            “<a href="http://192.168.37.138">http://192.168.37.138</a></em>”</strong> -AllowHttp
+                    –EditingEnabled</p>
+                <p>一个是 InternalURL ,一个是ExternalUrl <br> ExternalUrl是office online 的主机的ip地址,这个好说, <br> 但是InternalURL
+                    你怎么搞了?</p>
+                <p>如果我们的office online 主机不加入域的话,他的计算机名称里面是没有类似xxx.com 这样的东西的,只是简单的一个名字</p>
+                <p><img src="https://img-blog.csdn.net/20180705143442975?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>不死心,继续用这个名字开启服务场试试? <br> 报错信息明确指明:必须将服务器加入到域中</p>
+                <p><img src="https://img-blog.csdn.net/20180705143808773?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>到微软的官方文档 看一看</p>
+                <p><img src="https://img-blog.csdn.net/20180705143857722?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>官方文档也写了office online 必须是域的一部分.看来域控是必须要有的,office online 主机不能脱离 域控单独运行.</p>
+                <p>那怎么办?甲方不让安装域控,那只有使用甲方的域控了,好在这个是可以的.</p>
+                <p>方法: <br> 我们只需要把office online添加到甲方的域中就ok,然后甲方自己再把我们的office online主机
+                    添加进管理,和之前的操作是一样的,只不过,域控主机的操作不是我们而已.然后再申请一个机器,在里面跑wopi 代码就ok.</p>
+                <p>之前做测试WOPI代码的时候,直接在域控上面跑的,现在加入的是甲方的域控,是不能让你在上面跑java 代码的,所以要另外一个机器,在另外一台机器上跑wopi代码</p>
+                <p>回到自己的测试. <br> 在虚拟机中新建一个主机,ip地址是:192.168.37.135,安装java 环境,把word文件上传到该服务器的c盘,把之前编写的wopi 的代码上传到上面去,并运行.
+                </p>
+                <p>访问的地址要变化,回调地址从域控的地址,改成新的主机的地址,也就是下面的这个地址:</p>
+                <p><a
+                        href="http://192.168.37.138/wv/wordviewerframe.aspx?WOPISrc=http://192.168.37.135/wopi/files/123.docx">http://192.168.37.138/wv/wordviewerframe.aspx?WOPISrc=http://192.168.37.135/wopi/files/123.docx</a>
+                </p>
+                <p><img src="https://img-blog.csdn.net/20180705145822189?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>结果是ok 的</p>
+                <p>其实在整个过程中,域控的唯一作用就是 让office online主机添加进域,并管理了office online主机,只有这样office online
+                    主机的服务才能跑起来,一旦跑起来了,后面的事情也就跟域控的主机没有什么关系了</p>
+            </div>
+            <div>
+                <div></div>
+            </div>
+            <link href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/markdown_views-d7a94ec6ab.css"
+                rel="stylesheet">
+            <link href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/style-f1c5feb645.css" rel="stylesheet">
+        </div>
+    </article>
+
+
+</body>
+
+</html>

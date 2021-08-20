@@ -1,0 +1,77 @@
+<html>
+
+<body>
+
+    <article class="baidu_pl">
+        <div id="article_content" class="article_content clearfix">
+            <link rel="stylesheet"
+                href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/ck_htmledit_views-b5506197d8.css">
+            <div id="content_views" class="markdown_views prism-atom-one-light">
+                <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                    <path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block"
+                        style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+                </svg>
+                <p>本文是第4篇</p>
+                <p>(1)概述 <br> <a
+                        href="https://blog.csdn.net/a897180673/article/details/80548567">https://blog.csdn.net/a897180673/article/details/80548567</a>
+                    <br> (2)域控安装 <br> <a
+                        href="https://blog.csdn.net/a897180673/article/details/80563296">https://blog.csdn.net/a897180673/article/details/80563296</a>
+                    <br> (3)office online安装 <br> <a
+                        href="https://blog.csdn.net/a897180673/article/details/80569869">https://blog.csdn.net/a897180673/article/details/80569869</a>
+                    <br> (5)wopi java代码实现,反思 <br> <a
+                        href="https://blog.csdn.net/a897180673/article/details/80917254">https://blog.csdn.net/a897180673/article/details/80917254</a>
+                </p>
+                <p>2台windows 主机全部安装配置好了以后,他们都是单独的个体,必须将他们进行连接</p>
+                <p>1.开启两台windwos server 服务器</p>
+                <p>2.让两台服务器连接的方式很简单,就是让office online 服务器指向 域控制服务器</p>
+                <p>首先查一下 两台主机的ip <br> 域控制器主机:192.168.37.142 <br> office online主机:192.168.37.138</p>
+                <p>进入office online主机.打开网络属性,找到ipv4的配置,将dns 改成域控制器的ip <br> 点击确定 <br> <img
+                        src="https://img-blog.csdn.net/20180604173932702?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>3.把office online 服务器加入到域服务器的域中</p>
+                <p>右击计算机的属性,或者window+E 然后空白处选择属性,点击更改 <br> <img
+                        src="https://img-blog.csdn.net/20180604174241644?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>接下来会弹出小窗口,点击更改 又弹出一个小窗口,这里设置域,之前安装域控制器的时候设置的是test.com,这里直接填入 设置如下, 然后点击确定</p>
+                <p><img src="https://img-blog.csdn.net/20180604174550359?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>点击确定后又会弹出一个小窗口 这个事用于登陆的,输入域控制器的用户名和密码即可</p>
+                <p><img src="https://img-blog.csdn.net/20180604174835654?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>这个时候如果你和我一样用的是虚拟机克隆就会弹出错误 <br> <img
+                        src="https://img-blog.csdn.net/20180604175006438?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>前面说了 因为我是克隆的虚拟机,所以两台主机的信息是一样的,那么需要重新修改一下就ok了</p>
+                <p>如果没有出现错误则跳到下一步</p>
+                <p>下面是解决错误的办法 <br> 找到这个文件,打开 <br> C:\Windows \System32\sysprep\sysprep.exe <br> 从操作如下,点击确定后会重新启动</p>
+                <p><img src="https://img-blog.csdn.net/2018060417534512?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>重新启动后,再安装上面的步骤添加一次,就会ok</p>
+                <p><img src="https://img-blog.csdn.net/20180704101854826?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>4.在域控服务器把 office 主机添加进管理</p>
+                <p>打开域控服务器,在任务栏的左下角点击服务器管理器</p>
+                <p>在菜单中点击 管理–&gt;添加服务器—&gt;立即查找</p>
+                <p>在下面会出现2台主机,一台是域控的,一台是office online 的,把office Online的主机添加进去就ok</p>
+                <p><img src="https://img-blog.csdn.net/20180704102128786?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>添加OK后,点击左侧的所有服务器,看到管理了,并显示联机,就是ok 的</p>
+                <p><img src="https://img-blog.csdn.net/20180704102558765?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>ok,至此,两台windows 主机不再是单独的个体了,他们之间通过添加域的方式连接在一起.这个时候两台主机就可以相互通信了</p>
+                <p>需要注意一点的事情 就是重启,</p>
+                <p>重启过后我这里出现过 域失效的情况,要重新添加一下 域就ok了.</p>
+                <p>到这里office online 的 安装配置部分 就全部结束了,下一章写怎么在代码中实现wopi,并成功的在浏览器中显示word.</p>
+            </div>
+            <div>
+                <div></div>
+            </div>
+            <link href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/markdown_views-d7a94ec6ab.css"
+                rel="stylesheet">
+            <link href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/style-f1c5feb645.css" rel="stylesheet">
+        </div>
+    </article>
+
+</body>
+
+</html>

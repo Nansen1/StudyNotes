@@ -1,0 +1,89 @@
+<html>
+
+<body>
+    <article class="baidu_pl">
+        <div id="article_content" class="article_content clearfix">
+            <link rel="stylesheet"
+                href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/ck_htmledit_views-b5506197d8.css">
+            <div id="content_views" class="markdown_views">
+                <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                    <path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block"
+                        style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+                </svg>
+                <p>本文是第3篇</p>
+                <p>(1)概述 <br> <a
+                        href="https://blog.csdn.net/a897180673/article/details/80548567">https://blog.csdn.net/a897180673/article/details/80548567</a>
+                    <br> (2)域控安装 <br> <a
+                        href="https://blog.csdn.net/a897180673/article/details/80563296">https://blog.csdn.net/a897180673/article/details/80563296</a>
+                    <br> (4)关联配置 <br> <a
+                        href="https://blog.csdn.net/a897180673/article/details/80623207">https://blog.csdn.net/a897180673/article/details/80623207</a>
+                    <br> (5)wopi java代码实现,反思 <br> <a
+                        href="https://blog.csdn.net/a897180673/article/details/80917254">https://blog.csdn.net/a897180673/article/details/80917254</a>
+                </p>
+                <p>Office Online Server服务必须安装在没有其他任何服务的系统</p>
+                <p>下面安装2台windwos server主机中的另外一台主机,给他安装office online</p>
+                <p>这个安装稍微顺畅点,直接点击安装的那种,</p>
+                <p>参考微软的官网的安装说明: <br> <a
+                        href="https://docs.microsoft.com/zh-cn/officeonlineserver/deploy-office-online-server">https://docs.microsoft.com/zh-cn/officeonlineserver/deploy-office-online-server</a>
+                </p>
+                <p>首先要下载2个文件,一个是office online 安装包,一个是office online 的语言包</p>
+                <pre class="prettyprint"
+                    name="code"><code class="hljs avrasm has-numbering" onclick="mdcp.copyCode(event)" style="position: unset;"><span class="hljs-label">ed2k:</span>//|file|cn_office_online_server_may_2016_x64_dvd_8480704<span class="hljs-preprocessor">.iso</span>|<span class="hljs-number">709687296</span>|<span class="hljs-number">99014E02579</span>B6E08E7172D05857F2D05|/<div class="hljs-button {2}" data-title="复制" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.4259&quot;}"></div></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li></ul></pre>
+                <pre class="prettyprint"
+                    name="code"><code class="hljs avrasm has-numbering" onclick="mdcp.copyCode(event)" style="position: unset;"><span class="hljs-label">ed2k:</span>//|file|cn_office_online_server_language_pack_may_2016_x64_8783021<span class="hljs-preprocessor">.exe</span>|<span class="hljs-number">122025248</span>|<span class="hljs-number">3E8073</span>A25EE45E0C106E34FA86CB006B|/<div class="hljs-button {2}" data-title="复制" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.4259&quot;}"></div></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li></ul></pre>
+                <p>ok,开始</p>
+                <p>1.开机,进入到桌面后,打开powershell <br> 输入</p>
+                <pre class="prettyprint"
+                    name="code"><code class="hljs lasso has-numbering" onclick="mdcp.copyCode(event)" style="position: unset;">Add<span class="hljs-attribute">-WindowsFeature</span> Web<span class="hljs-attribute">-Server</span>,Web<span class="hljs-attribute">-Mgmt</span><span class="hljs-attribute">-Tools</span>,Web<span class="hljs-attribute">-Mgmt</span><span class="hljs-attribute">-Console</span>,Web<span class="hljs-attribute">-WebServer</span>,Web<span class="hljs-attribute">-Common</span><span class="hljs-attribute">-Http</span>,Web<span class="hljs-attribute">-Default</span><span class="hljs-attribute">-Doc</span>,Web<span class="hljs-attribute">-Static</span><span class="hljs-attribute">-Content</span>,Web<span class="hljs-attribute">-Performance</span>,Web<span class="hljs-attribute">-Stat</span><span class="hljs-attribute">-Compression</span>,Web<span class="hljs-attribute">-Dyn</span><span class="hljs-attribute">-Compression</span>,Web<span class="hljs-attribute">-Security</span>,Web<span class="hljs-attribute">-Filtering</span>,Web<span class="hljs-attribute">-Windows</span><span class="hljs-attribute">-Auth</span>,Web<span class="hljs-attribute">-App</span><span class="hljs-attribute">-Dev</span>,Web<span class="hljs-attribute">-Net</span><span class="hljs-attribute">-Ext45</span>,Web<span class="hljs-attribute">-Asp</span><span class="hljs-attribute">-Net45</span>,Web<span class="hljs-attribute">-ISAPI</span><span class="hljs-attribute">-Ext</span>,Web<span class="hljs-attribute">-ISAPI</span><span class="hljs-attribute">-Filter</span>,Web<span class="hljs-attribute">-Includes</span>,InkandHandwritingServices,NET<span class="hljs-attribute">-Framework</span><span class="hljs-attribute">-Features</span>,NET<span class="hljs-attribute">-Framework</span><span class="hljs-attribute">-Core</span>,NET<span class="hljs-attribute">-HTTP</span><span class="hljs-attribute">-Activation</span>,NET<span class="hljs-attribute">-Non</span><span class="hljs-attribute">-HTTP</span><span class="hljs-attribute">-Activ</span>,NET<span class="hljs-attribute">-WCF</span><span class="hljs-attribute">-HTTP</span><span class="hljs-attribute">-Activation45</span>,Windows<span class="hljs-attribute">-Identity</span><span class="hljs-attribute">-Foundation</span>,Server<span class="hljs-attribute">-Media</span><span class="hljs-attribute">-Foundation</span><div class="hljs-button {2}" data-title="复制" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.4259&quot;}"></div></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li></ul></pre>
+                <p>按下回车,如下图</p>
+                <p><img src="https://img-blog.csdn.net/20180604162955356?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>安装好了如图:</p>
+                <p><img src="https://img-blog.csdn.net/20180604163605134?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""> <br> 2.完成后到上面微软的官网 下载安装以下软件</p>
+                <p>NET Framework 4.5.2 <br> Visual C++ Redistributable Packages for Visual Studio 2013 <br> Visual C++
+                    Redistributable for Visual Studio 2015 <br> Microsoft.IdentityModel.Extention.dll</p>
+                <p>依次安装这4个软件,不出意外 软件安装顺风顺水,一路点击 下一步,出现问题了就只能单独的百度解决了,貌似还比比较麻烦,所以推荐大家用windows server 2012 r2 with update
+                    这个系统安装,尽可能减少出错</p>
+                <p>还有一种可能就是你没有重启,安装软件后,如果系统提示你重启,那就重启下,否则有可能后面的软件安装不了</p>
+                <p>(1). <br> <img
+                        src="https://img-blog.csdn.net/20180604164034441?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>(2). <br> <img
+                        src="https://img-blog.csdn.net/20180604164106501?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>(3). <br> <img
+                        src="https://img-blog.csdn.net/20180604164346321?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>(4).这个软件不重启就安装不了,重启后解决</p>
+                <p><img src="https://img-blog.csdn.net/20180604164904498?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>3.ok了 一切准备环境都安装好了</p>
+                <p>下面终于进入主题了,office online 的安装, 上面提供了2个下载地址,下载下来后直接直接安装 <br> 一路点击下一步,爽到飞起</p>
+                <p><img src="https://img-blog.csdn.net/20180604165258990?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>安装成功</p>
+                <p><img src="https://img-blog.csdn.net/20180604165738848?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>4.office online 安装好了,下面就是安装语言包,也是爽的飞起,一路点击下一步</p>
+                <p><img src="https://img-blog.csdn.net/20180604165815168?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>安装成功</p>
+                <p><img src="https://img-blog.csdn.net/20180604165904705?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                        alt="这里写图片描述" title=""></p>
+                <p>OK了,至此,另外一台主机的安装全部ok.</p>
+                <p>大吉大利,两台windwos server 主机到现在全部ok 了.</p>
+                <p>但是他们到现在还是单独的个体,怎么让他们可以互相连接了?</p>
+                <p>下一篇写两台windwos 主机的连接配置</p>
+            </div>
+            <div>
+                <div></div>
+            </div>
+            <link href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/markdown_views-d7a94ec6ab.css"
+                rel="stylesheet">
+            <link href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/style-f1c5feb645.css" rel="stylesheet">
+        </div>
+    </article>
+</body>
+
+</html>

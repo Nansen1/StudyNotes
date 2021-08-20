@@ -1,0 +1,109 @@
+<html>
+
+<body>
+        <pre>
+                全文参考：
+                https://blog.csdn.net/a897180673/article/details/80548567
+                https://blog.csdn.net/weixin_43096810/article/details/108852131?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&spm=1001.2101.3001.4242
+                https://docs.fuyeor.com/office-online-server-2016oos/
+                备用：
+                
+                https://docs.microsoft.com/zh-cn/officeonlineserver/deploy-office-online-server
+https://www.cnblogs.com/ldybyz/p/6645127.html
+https://www.cnblogs.com/poissonnotes/p/3238238.html
+
+https://www.cnblogs.com/wangjiming/p/10075296.html#top
+https://www.cnblogs.com/poissonnotes/p/3267190.html
+
+https://blog.csdn.net/jiaqu2177/article/details/81945692?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.control
+
+https://blog.csdn.net/jiaqu2177/article/details/81943615
+https://wopi.readthedocs.io/en/latest/overview.html
+
+        </pre>
+    <div id="content_views" class="markdown_views">
+        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+            <path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block"
+                style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+        </svg>
+        <p>本文是第2篇</p>
+        <p>(1)概述 <br> <a
+                href="https://blog.csdn.net/a897180673/article/details/80548567">https://blog.csdn.net/a897180673/article/details/80548567</a>
+            <br> (3)office online安装 <br> <a
+                href="https://blog.csdn.net/a897180673/article/details/80569869">https://blog.csdn.net/a897180673/article/details/80569869</a>
+            <br> (4)关联配置 <br> <a
+                href="https://blog.csdn.net/a897180673/article/details/80623207">https://blog.csdn.net/a897180673/article/details/80623207</a>
+            <br> (5)wopi java代码实现,反思 <br> <a
+                href="https://blog.csdn.net/a897180673/article/details/80917254">https://blog.csdn.net/a897180673/article/details/80917254</a>
+        </p>
+        <p>1.准备 <br> 刚开始安装的时候,使用的是虚拟机进行的,首先去安装vmare,去msdn itell you 下载 windows server 2012 r2 with update
+            的镜像.大家在真实的环境中可以直接去申请真实的主机进行安装部署.具体的虚拟机安装过程就不过多的说明了.我是直接安装好一个虚拟机并进行克隆,后面会有一个小问题,后面再说.</p>
+        <p>2启动windows server 2012 服务器,如下图 <br> <img
+                src="https://img-blog.csdn.net/20180602162200702?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                alt="这里写图片描述" title=""></p>
+        <p>3.下面开始配置域控</p>
+        <p>点击左下角图标,打开配置管理器,点击添加角色和功能</p>
+        <p><img src="https://img-blog.csdn.net/20180602162407562?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                alt="这里写图片描述" title=""></p>
+        <p>4.连续3次下一步,然后勾选红框, <br> 会弹出提示.点击确定 <br> 并点击下一步</p>
+        <p><img src="https://img-blog.csdn.net/20180602162645523?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                alt="这里写图片描述" title=""></p>
+        <p><img src="https://img-blog.csdn.net/20180602162923855?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                alt="这里写图片描述" title=""></p>
+        <p>5.功能这一页默认,点击下一步 <br> <img
+                src="https://img-blog.csdn.net/20180602163040181?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                alt="这里写图片描述" title=""></p>
+        <p>6.这一页也默认,点击下一步 <br> <img
+                src="https://img-blog.csdn.net/20180602163145136?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                alt="这里写图片描述" title=""></p>
+        <p>7.确认这一页 ,点击安装</p>
+        <p><img src="https://img-blog.csdn.net/20180602163234450?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                alt="这里写图片描述" title=""></p>
+        <p>安装会消耗点时间,等待一会就好</p>
+        <p>““ <br> “““““ <br> ““““““““` <br> “““““““““““““` <br> ““““““““““““““““““““` <br>
+            “““““““““““““““““““““““`(100%)</p>
+        <p>8.安装好后的样子,点击提升为域控制器</p>
+        <p>又会弹出一个小窗口</p>
+        <p><img src="https://img-blog.csdn.net/20180602163506921?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                alt="这里写图片描述" title=""></p>
+        <p>9.弹出的窗口如下图, <br> 选择第三个,添加新林,并输入一个域名,这里我输入的是test.com <br> 点击下一步 <br> <img
+                src="https://img-blog.csdn.net/20180602163724816?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                alt="这里写图片描述" title=""></p>
+        <p>10.这里需要一个密码,这个随便输入就ok,后面好像也没怎么用到,点击下一步</p>
+        <p><img src="https://img-blog.csdn.net/2018060216581931?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                alt="这里写图片描述" title=""></p>
+        <p>11.忽略警告,下一步 <br> <img
+                src="https://img-blog.csdn.net/20180602165913904?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                alt="这里写图片描述" title=""></p>
+        <p>12.这一页默认,点击下一步 <br> <img
+                src="https://img-blog.csdn.net/20180604152827397?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                alt="这里写图片描述" title=""></p>
+        <p>13.路径这一页,还是默认,点击下一步</p>
+        <p><img src="https://img-blog.csdn.net/20180604152924242?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                alt="这里写图片描述" title=""></p>
+        <p>14.查看这一页,继续默认,点击下一步</p>
+        <p><img src="https://img-blog.csdn.net/20180604153010476?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                alt="这里写图片描述" title=""></p>
+        <p>15.到了先决条件检查这一页,出现了问题,因为账号没有设置密码 <br> <img
+                src="https://img-blog.csdn.net/20180604153208424?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                alt="这里写图片描述" title=""></p>
+        <p>在cmd窗口设置一下administrator 的用户名和密码 并使用密码</p>
+        <pre class="prettyprint"
+            name="code"><code class="language-shell hljs bash has-numbering" onclick="mdcp.copyCode(event)" style="position: unset;">net user administrator <span class="hljs-string">"Abc123456"</span><div class="hljs-button {2}" data-title="复制" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.4259&quot;}"></div></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li></ul></pre>
+        <pre class="prettyprint"
+            name="code"><code class="language-shell hljs coffeescript has-numbering" onclick="mdcp.copyCode(event)" style="position: unset;">net user administrator /<span class="hljs-attribute">passwordreq</span>:<span class="hljs-literal">yes</span><div class="hljs-button {2}" data-title="复制" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.4259&quot;}"></div></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li></ul></pre>
+        <p>设置ok后,再次回来点击重新运行 先决条件检查就ok了 <br> 然后点击安装,需要消耗点时间检查</p>
+        <p>16.跳转到安装这一页,需要消耗点时间</p>
+        <p><img src="https://img-blog.csdn.net/20180604153947584?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                alt="这里写图片描述" title=""></p>
+        <p>过一段时间后 安装好了,直接要重新启动了,在窗口的左上角可以看到提示:此服务器已成功配置为域控制器.</p>
+        <p><img src="https://img-blog.csdn.net/20180604154058763?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                alt="这里写图片描述" title=""></p>
+        <p>ok了,至此,域控制器的安装已经完全ok了,需要注意的是,以后登录后会要输入密码,就是在第15步设置的那个</p>
+        <p><img src="https://img-blog.csdn.net/2018060415450742?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E4OTcxODA2NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"
+                alt="这里写图片描述" title=""></p>
+        <p>这台域控制服务器后期还有一个配置,下下回再说. <br> 目前2台windws主机的一台域控制服务器已经搞定了,下一篇写另外一台windows 服务器的安装,也就是office online服务的安装</p>
+    </div>
+
+    <body>
+        <html>
