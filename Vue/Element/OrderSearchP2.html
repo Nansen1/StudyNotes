@@ -81,14 +81,14 @@
         <el-row type="flex" justify="center">
             <el-col :span="24" style="text-align: center;">
                 <el-button @click="dialogVisible = true">View Selected Items</el-button>
-                <el-button @click="dialogVisible = true">Submit Selected Items</el-button>
+                <el-button @click="handlerSubmitItemsClick">Submit Selected Items</el-button>
             </el-col>
         </el-row>
         <el-dialog
                 width="100%"
                 :visible.sync="dialogVisible"
                 :before-close="handleClose">
-            <el-table :data="selectedTableData"
+            <el-table :data="multipleSelection"
                       empty-text="We didn't find any data to show at this time"
                       :row-style="rowStyle"
                       style="width: 100%"
@@ -102,7 +102,7 @@
                 </el-table-column>
             </el-table>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">Submit Selected Items</el-button>
+                <el-button @click="handlerSubmitItemsClick">Submit Selected Items</el-button>
             </span>
         </el-dialog>
     </template>
@@ -127,12 +127,11 @@
                 searchList: '',
                 tableColumnOptions: [],
                 tableData: [],
-                selectedTableData: [],
                 rowStyle: function ({row, rowIndex}) {
 
                 },
                 multipleSelection: [],
-                dialogVisible:false
+                dialogVisible: false
             };
         },
         created: function () {
@@ -246,7 +245,8 @@
                                 data[i].customer = result[i]["endCustomer"];
                                 data[i].address = result[i]["addressFields"];
                             }
-                        } else {
+                        }
+                        else {
                             Xrm.Utility.alertDialog(this.statusText);
                         }
                     }
@@ -319,7 +319,7 @@
                     {
                         label: 'Order Receipt Date',
                         field: 'OrderReceiptDate',
-                        width: '150'
+                        width: '160'
                     },
                     {
                         label: 'Country',
@@ -399,22 +399,17 @@
                 }
                 this.tableData = data;
             },
-            toggleSelection(rows) {
-                if (rows) {
-                    rows.forEach(row => {
-                        this.$refs.multipleTable.toggleRowSelection(row);
-                    });
-                } else {
-                    this.$refs.multipleTable.clearSelection();
-                }
-            },
             handleRowClick(row, column, event) {
                 this.$refs.multipleTable.toggleRowSelection(row, true);
             },
             handleSelectionChange(selection) {
                 this.multipleSelection = selection;
             },
-
+            handlerSubmitItemsClick() {
+                orderData = this.multipleSelection;
+                // submitUpdateOrderData();
+                this.dialogVisible = false;
+            },
         }
     });
 
@@ -439,7 +434,8 @@
                 req.onreadystatechange = null;
                 if (this.status === 204) {
                     //Success - No Return Data - Do Something
-                } else {
+                }
+                else {
                     console.log(this.statusText);
                 }
             }
@@ -452,7 +448,8 @@
             var filter;
             if (orderData[i].serialNo == null || orderData[i].serialNo == "") {
                 filter = "_lvo_returnconcessionrequestid_value eq '" + returnConcessionRequestId + "' and lvo_so eq '" + orderData[i].serialNo + "'and lvo_lineitemnumber eq '" + orderData[i].lineItemNumber + "' and lvo_serialnumbers eq '" + orderData[i].serialNo + "'";
-            } else {
+            }
+            else {
                 filter = "_lvo_returnconcessionrequestid_value eq '" + returnConcessionRequestId + "' and lvo_so eq '" + orderData[i].serialNo + "'and lvo_lineitemnumber eq '" + orderData[i].lineItemNumber + "'";
             }
 
@@ -477,7 +474,8 @@
                 entity["lvo_shiptoname"] = orderData[i].serialNo;
                 entity["lvo_so"] = orderData[i].serialNo;
                 createOrUpdateReturnConcessionRequestItem(true, entity, null);
-            } else {
+            }
+            else {
                 entity["lvo_quantity"] = orderData[i].quantity;
                 createOrUpdateReturnConcessionRequestItem(false, entity, returnConcessionRequestItemId);
             }
@@ -491,7 +489,8 @@
         var req = new XMLHttpRequest();
         if (isCreate) {
             req.open("POST", Xrm.Page.context.getClientUrl() + "/api/data/v9.1/lvo_returnconcessionrequestitems", false);
-        } else {
+        }
+        else {
             req.open("PATCH", Xrm.Page.context.getClientUrl() + "/api/data/v9.1/lvo_returnconcessionrequestitems(" + id + ")", false);
         }
 
@@ -508,7 +507,8 @@
                     var regExp = /\(([^)]+)\)/;
                     var matches = regExp.exec(uri);
                     var newEntityId = matches[1];
-                } else {
+                }
+                else {
                     Xrm.Utility.alertDialog(this.statusText);
                 }
             }
@@ -528,7 +528,8 @@
                 req.onreadystatechange = null;
                 if (this.status == 200) {
                     successCallback(this.responseText);
-                } else {
+                }
+                else {
                     errorCallback(this.responseText);
                 }
             }
@@ -551,11 +552,13 @@
                     var results = JSON.parse(this.response);
                     if (results.value.length > 0) {
                         return results.value[0]["lvo_returnconcessionrequestitemid"];
-                    } else {
+                    }
+                    else {
                         return;
                     }
 
-                } else {
+                }
+                else {
                     return;
                     console.log(this.statusText);
                 }
@@ -579,10 +582,12 @@
                     var results = JSON.parse(this.response);
                     if (results.value.length > 0) {
                         return results.value[0]["transactioncurrencyid"];
-                    } else {
+                    }
+                    else {
                         return;
                     }
-                } else {
+                }
+                else {
                     return;
                     console.log("Retrieve Currency Error: " + this.statusText);
                 }
