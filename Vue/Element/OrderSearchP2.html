@@ -1,0 +1,596 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <title>Order Search</title>
+    <!-- import CSS -->
+    <link href="https://unpkg.com/element-ui@2.15.6/lib/theme-chalk/index.css" rel="stylesheet">
+
+    <style>
+        .el-row {
+            margin-bottom: 20px;
+        }
+
+        .icon-hover:hover {
+            color: #5cb6ff;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <template>
+        <el-row :gutter="20">
+            <el-col :span="6">
+                Search By:
+                <el-select v-model="searchName"
+                           @change="handleSearchSelectChange">
+                    <el-option v-for="item in searchSelectOptions"
+                               :key="item.value"
+                               :label="item.label"
+                               :value="item.value">
+                    </el-option>
+                </el-select>
+            </el-col>
+            <el-col :span="18">
+                <span>{{ searchNameLabel }}:</span>
+                <el-input v-model="searchVal" placeholder="" style="width: 200px;"></el-input>
+                <i v-if="searchVal !== ''"
+                   @click="handleClickAddSearch"
+                   class="el-icon-circle-plus-outline icon-hover"
+                   style="font-size: 1.5em;vertical-align: middle;"></i>
+                <el-button @click="handlerSearchBtnClick"
+                           round
+                           style="margin-left: 20px;">
+                    Search
+                </el-button>
+            </el-col>
+        </el-row>
+        <el-row>
+            <el-col :span="18" :offset="6">
+                <span style="margin-left: 20px;">&nbsp;&nbsp;&nbsp;{{ searchListLable }}: {{ searchList }}</span>
+                <i v-if="searchList !== ''"
+                   @click="handleClickDelSearch"
+                   class="el-icon-delete icon-hover"
+                   style="margin-left:20px;vertical-align: middle;"></i>
+            </el-col>
+        </el-row>
+
+        <el-row>
+            <el-col :span="24">
+                <el-table :data="tableData"
+                          empty-text="We didn't find any data to show at this time"
+                          :row-style="rowStyle"
+                          @row-click="handleRowClick"
+                          @selection-change="handleSelectionChange"
+                          ref="multipleTable"
+                          style="width: 100%"
+                          tooltip-effect="dark">
+                    <el-table-column type="selection"
+                                     width="55">
+                    </el-table-column>
+                    <el-table-column
+                            v-for="option in tableColumnOptions"
+                            :label="option.label"
+                            :prop="option.field"
+                            :width="option.width"
+                            show-overflow-tooltip>
+                    </el-table-column>
+                </el-table>
+            </el-col>
+        </el-row>
+        <el-row type="flex" justify="center">
+            <el-col :span="24" style="text-align: center;">
+                <el-button @click="dialogVisible = true">View Selected Items</el-button>
+                <el-button @click="dialogVisible = true">Submit Selected Items</el-button>
+            </el-col>
+        </el-row>
+        <el-dialog
+                width="100%"
+                :visible.sync="dialogVisible"
+                :before-close="handleClose">
+            <el-table :data="selectedTableData"
+                      empty-text="We didn't find any data to show at this time"
+                      :row-style="rowStyle"
+                      style="width: 100%"
+                      tooltip-effect="dark">
+                <el-table-column
+                        v-for="option in tableColumnOptions"
+                        :label="option.label"
+                        :prop="option.field"
+                        :width="option.width"
+                        show-overflow-tooltip>
+                </el-table-column>
+            </el-table>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">Submit Selected Items</el-button>
+            </span>
+        </el-dialog>
+    </template>
+</div>
+<!-- import Vue before Element -->
+<script src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui@2.15.6/lib/index.js"></script>
+<script src="../../../ClientGlobalContext.js.aspx" type="text/javascript"></script>
+<script type="text/javascript">
+    var orderData = [];
+    var returnConcessionRequestId;
+
+    var vm = new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                debug: true,
+                searchSelectOptions: [],
+                searchName: '',
+                searchVal: '',
+                searchList: '',
+                tableColumnOptions: [],
+                tableData: [],
+                selectedTableData: [],
+                rowStyle: function ({row, rowIndex}) {
+
+                },
+                multipleSelection: [],
+                dialogVisible:false
+            };
+        },
+        created: function () {
+            this.loadSearchSelectOptions();
+            this.loadTableColumns();
+            this.loadTableData();
+        },
+        computed: {
+            searchNameLabel: function () {
+                return this.searchName.replace('Number', '') + ' Number';
+            },
+            searchListLable: function () {
+                return this.searchName.replace('Number', '') + ' List';
+            }
+        },
+        methods: {
+            loadSearchSelectOptions() {
+                this.searchSelectOptions = [
+                    {
+                        value: 'OrderNumber',
+                        label: 'Order Number'
+                    }, {
+                        value: 'InvoiceNumber',
+                        label: 'Invoice Number'
+                    }
+                ];
+                //默认选中第一个
+                this.searchName = this.searchSelectOptions[0].value;
+            },
+            handleSearchSelectChange(value) {
+                // alert(value);
+            },
+            handleClickAddSearch() {
+                this.searchList += (this.searchList ? ',' : '') + this.searchVal;
+            },
+            handleClickDelSearch() {
+                this.searchList = '';
+            },
+            handlerSearchBtnClick() {
+                if (this.searchList) {
+                    let searchCondition = {};
+                    searchCondition[this.searchName] = this.searchList;
+                    let data = this.search(searchCondition);
+                    this.loadTableData(data);
+                }
+            },
+            search(searchCondition) {
+                if (this.debug) {
+                    let data = [
+                        {
+                            OrderNo: '121',
+                            SerialNo: '121',
+                            OrderItemNo: '121',
+                            InvoiceNo: '121',
+                            InvoiceDate: '2020-02-02',
+                            InvoiceQuantity: '200',
+                            ReturnQuantity: '121',
+                            Part: 'test',
+                            Description: 'test',
+                            UnitPrice: '111',
+                            Currency: '人民币',
+                            PoNo: '121',
+                            OrderReceiptDate: '2020-02-02',
+                            Country: 'test',
+                            Customer: 'test',
+                            Address: '上海市普陀区金沙江路 1518 弄'
+                        }
+                    ];
+                    return data;
+                }
+                var lists = searchCondition.OrderNumber.split(",");
+                var body = {};
+                body["salesOrderNumberList"] = lists;
+                var parameter = {};
+                parameter.body = JSON.stringify(body);
+                var data = new Array();
+                var req = new XMLHttpRequest();
+                req.open("POST", Xrm.Page.context.getClientUrl() + "/api/data/v9.2/lvo_SearchOrderOVP", false);
+                req.setRequestHeader("OData-MaxVersion", "4.0");
+                req.setRequestHeader("OData-Version", "4.0");
+                req.setRequestHeader("Accept", "application/json");
+                req.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+                req.onreadystatechange = function () {
+                    if (this.readyState === 4) {
+                        req.onreadystatechange = null;
+                        if (this.status === 200) {
+                            //Success - No Return Data - Do Something
+                            var msg = JSON.parse(JSON.parse(this.response).Response).msg;
+                            if (msg != "success") {
+                                Xrm.Utility.alertDialog("Query order data error: " + msg);
+                                return;
+                            }
+                            var result = [];
+                            result = JSON.parse(JSON.parse(this.response).Response).result;
+                            for (var i = 0; i < result.length; i++) {
+                                data[i] = {};
+                                data[i].orderNo = result[i]["orderNumber"];
+                                data[i].serialNo = result[i]["serialNo"];
+                                data[i].orderItemNo = result[i]["lineItemNumber"];
+                                data[i].invoiceNo = result[i]["invoiceNumber"];
+                                data[i].invoiceDate = result[i]["invoiceDate"];
+                                data[i].invoiceQuantity = result[i]["invoiceQuantity"];
+                                data[i].returnQuantity = 0;
+                                data[i].part = result[i]["partNo"];
+                                data[i].description = result[i]["partDescription"];
+                                data[i].unitPrice = result[i]["unitPrice"];
+                                data[i].currency = result[i]["currency"];
+                                data[i].poNo = result[i]["poNumber"];
+                                data[i].orderReceiptDate = result[i]["orderReceiptDate"];
+                                data[i].country = result[i]["salesOfficeCountry"];
+                                data[i].customer = result[i]["endCustomer"];
+                                data[i].address = result[i]["addressFields"];
+                            }
+                        } else {
+                            Xrm.Utility.alertDialog(this.statusText);
+                        }
+                    }
+                };
+                req.send(JSON.stringify(parameter));
+                return data;
+            },
+            loadTableColumns() {
+                this.tableColumnOptions = [
+                    {
+                        label: 'Order No',
+                        field: 'OrderNo',
+                        width: '120'
+                    },
+                    {
+                        label: 'Serial No',
+                        field: 'SerialNo',
+                        width: '120'
+                    },
+                    {
+                        label: 'Order Item No',
+                        field: 'OrderItemNo',
+                        width: '120'
+                    },
+                    {
+                        label: 'Invoice No',
+                        field: 'InvoiceNo',
+                        width: '120'
+                    },
+                    {
+                        label: 'Invoice Date',
+                        field: 'InvoiceDate',
+                        width: '120'
+                    },
+                    {
+                        label: 'Invoice Quantity',
+                        field: 'InvoiceQuantity',
+                        width: '140'
+                    },
+                    {
+                        label: 'Return Quantity',
+                        field: 'ReturnQuantity',
+                        width: '140'
+                    },
+                    {
+                        label: 'Part',
+                        field: 'Part',
+                        width: '120'
+                    },
+                    {
+                        label: 'Description',
+                        field: 'Description',
+                        width: '120'
+                    },
+                    {
+                        label: 'Unit Price',
+                        field: 'UnitPrice',
+                        width: '120'
+                    },
+                    {
+                        label: 'Currency',
+                        field: 'Currency',
+                        width: '120'
+                    },
+                    {
+                        label: 'Po No',
+                        field: 'PoNo',
+                        width: '120'
+                    },
+                    {
+                        label: 'Order Receipt Date',
+                        field: 'OrderReceiptDate',
+                        width: '150'
+                    },
+                    {
+                        label: 'Country',
+                        field: 'Country',
+                        width: '120'
+                    },
+                    {
+                        label: 'Customer',
+                        field: 'Customer',
+                        width: '120'
+                    },
+                    {
+                        label: 'Address',
+                        field: 'Address',
+                        width: '120'
+                    },
+                ];
+            },
+            loadTableData(data) {
+                if (this.debug) {
+                    data = data || [
+                        {
+                            OrderNo: '122',
+                            SerialNo: '122',
+                            OrderItemNo: '122',
+                            InvoiceNo: '122',
+                            InvoiceDate: '2020-02-02',
+                            InvoiceQuantity: '200',
+                            ReturnQuantity: '122',
+                            Part: 'test',
+                            Description: 'test',
+                            UnitPrice: '111',
+                            Currency: '人民币',
+                            PoNo: '122',
+                            OrderReceiptDate: '2020-02-02',
+                            Country: 'test',
+                            Customer: 'test',
+                            Address: '上海市普陀区金沙江路 1518 弄'
+                        },
+                        {
+                            OrderNo: '123',
+                            SerialNo: '123',
+                            OrderItemNo: '123',
+                            InvoiceNo: '123',
+                            InvoiceDate: '2020-02-02',
+                            InvoiceQuantity: '200',
+                            ReturnQuantity: '123',
+                            Part: 'test',
+                            Description: 'test',
+                            UnitPrice: '111',
+                            Currency: '人民币',
+                            PoNo: '123',
+                            OrderReceiptDate: '2020-02-02',
+                            Country: 'test',
+                            Customer: 'test',
+                            Address: '上海市普陀区金沙江路 1518 弄'
+                        },
+                        {
+                            OrderNo: '123',
+                            SerialNo: '123',
+                            OrderItemNo: '123',
+                            InvoiceNo: '123',
+                            InvoiceDate: '2020-02-02',
+                            InvoiceQuantity: '200',
+                            ReturnQuantity: '123',
+                            Part: 'test',
+                            Description: 'test',
+                            UnitPrice: '111',
+                            Currency: '人民币',
+                            PoNo: '123',
+                            OrderReceiptDate: '2020-02-02',
+                            Country: 'test',
+                            Customer: 'test',
+                            Address: '上海市普陀区金沙江路 1518 弄'
+                        }
+                    ];
+                }
+                this.tableData = data;
+            },
+            toggleSelection(rows) {
+                if (rows) {
+                    rows.forEach(row => {
+                        this.$refs.multipleTable.toggleRowSelection(row);
+                    });
+                } else {
+                    this.$refs.multipleTable.clearSelection();
+                }
+            },
+            handleRowClick(row, column, event) {
+                this.$refs.multipleTable.toggleRowSelection(row, true);
+            },
+            handleSelectionChange(selection) {
+                this.multipleSelection = selection;
+            },
+
+        }
+    });
+
+    function updateReturnConcessionRequest(id) {
+        var entity = {};
+        entity.lvo_endusername = "XX";
+        entity.lvo_invoicedate = null;
+        entity.lvo_invoicenumber = "";
+        entity.lvo_ordernumber = "";
+        entity.lvo_ponumber = "";
+        entity.lvo_shiptoaddress = "";
+        entity["transactioncurrencyid@odata.bind"] = "/transactioncurrencies()";
+
+        var req = new XMLHttpRequest();
+        req.open("PATCH", Xrm.Page.context.getClientUrl() + "/api/data/v9.1/lvo_returnconcessionrequests(" + id + ")", false);
+        req.setRequestHeader("OData-MaxVersion", "4.0");
+        req.setRequestHeader("OData-Version", "4.0");
+        req.setRequestHeader("Accept", "application/json");
+        req.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+        req.onreadystatechange = function () {
+            if (this.readyState === 4) {
+                req.onreadystatechange = null;
+                if (this.status === 204) {
+                    //Success - No Return Data - Do Something
+                } else {
+                    console.log(this.statusText);
+                }
+            }
+        };
+        req.send(JSON.stringify(entity));
+    }
+
+    function submitUpdateOrderData() {
+        for (var i = 0; i < orderData.length; i++) {
+            var filter;
+            if (orderData[i].serialNo == null || orderData[i].serialNo == "") {
+                filter = "_lvo_returnconcessionrequestid_value eq '" + returnConcessionRequestId + "' and lvo_so eq '" + orderData[i].serialNo + "'and lvo_lineitemnumber eq '" + orderData[i].lineItemNumber + "' and lvo_serialnumbers eq '" + orderData[i].serialNo + "'";
+            } else {
+                filter = "_lvo_returnconcessionrequestid_value eq '" + returnConcessionRequestId + "' and lvo_so eq '" + orderData[i].serialNo + "'and lvo_lineitemnumber eq '" + orderData[i].lineItemNumber + "'";
+            }
+
+            var returnConcessionRequestItemId = queryItemByFilter(filter);
+            var entity;
+            if (returnConcessionRequestItemId == null) {
+                var currencyId = getCurrencyByCode(orderData[i].currency);
+                if (currencyId != null) {
+                    entity["transactioncurrencyid@odata.bind"] = "/transactioncurrencies(" + currencyId + ")";
+                }
+                entity["lvo_quantity"] = orderData[i].quantity;
+                entity["lvo_returnconcessionrequestid@odata.bind"] = "/lvo_returnconcessionrequests(" + returnConcessionRequestId + ")";
+                entity["lvo_invoicedate"] = orderData[i].invoiceDate;
+                entity["lvo_invoiceitemnumber"] = orderData[i].invoiceItemNumber;
+                entity["lvo_lineitemnumber"] = orderData[i].lineItemNumber;
+                entity["lvo_invoicenumber"] = orderData[i].invoiceNumber;
+                entity["lvo_originalquantity"] = orderData[i].invoiceQuantity;
+                entity["lvo_partdescription"] = orderData[i].partDescription;
+                entity["lvo_partnumber"] = orderData[i].partNo;
+                entity["lvo_serialnumbers"] = orderData[i].serialNo;
+                entity["lvo_shiptoaddress"] = orderData[i].costgap;
+                entity["lvo_shiptoname"] = orderData[i].serialNo;
+                entity["lvo_so"] = orderData[i].serialNo;
+                createOrUpdateReturnConcessionRequestItem(true, entity, null);
+            } else {
+                entity["lvo_quantity"] = orderData[i].quantity;
+                createOrUpdateReturnConcessionRequestItem(false, entity, returnConcessionRequestItemId);
+            }
+        }
+    }
+
+    function createOrUpdateReturnConcessionRequestItem(isCreate, entity, id) {
+        //var entity = {};
+        //entity.lvo_address = "123";
+
+        var req = new XMLHttpRequest();
+        if (isCreate) {
+            req.open("POST", Xrm.Page.context.getClientUrl() + "/api/data/v9.1/lvo_returnconcessionrequestitems", false);
+        } else {
+            req.open("PATCH", Xrm.Page.context.getClientUrl() + "/api/data/v9.1/lvo_returnconcessionrequestitems(" + id + ")", false);
+        }
+
+        req.setRequestHeader("OData-MaxVersion", "4.0");
+        req.setRequestHeader("OData-Version", "4.0");
+        req.setRequestHeader("Accept", "application/json");
+        req.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+        req.onreadystatechange = function () {
+            if (this.readyState === 4) {
+                req.onreadystatechange = null;
+                if (this.status === 204) {
+                    //Success - No Return Data - Do Something
+                    var uri = this.getResponseHeader("OData-EntityId");
+                    var regExp = /\(([^)]+)\)/;
+                    var matches = regExp.exec(uri);
+                    var newEntityId = matches[1];
+                } else {
+                    Xrm.Utility.alertDialog(this.statusText);
+                }
+            }
+        };
+        req.send(JSON.stringify(entity));
+    }
+
+    function executeBatch(clientURL, batchId, requestMsg, successCallback, errorCallback) {
+        var req = new XMLHttpRequest()
+        req.open("POST", encodeURI(clientURL + "/api/data/v9.2/$batch", true));
+        req.setRequestHeader("Content-Type", "multipart/mixed;boundary=batch_" + batchId);
+        req.setRequestHeader("Accept", "application/json");
+        req.setRequestHeader("OData-MaxVersion", "4.0");
+        req.setRequestHeader("OData-Version", "4.0");
+        req.onreadystatechange = function () {
+            if (this.readyState == 4) {
+                req.onreadystatechange = null;
+                if (this.status == 200) {
+                    successCallback(this.responseText);
+                } else {
+                    errorCallback(this.responseText);
+                }
+            }
+        };
+        req.send(requestMsg);
+    };
+
+    function queryItemByFilter(filter) {
+        var req = new XMLHttpRequest();
+        req.open("GET", Xrm.Page.context.getClientUrl() + "/api/data/v9.2/lvo_returnconcessionrequestitems?$filter=" + filter, false);
+        req.setRequestHeader("OData-MaxVersion", "4.0");
+        req.setRequestHeader("OData-Version", "4.0");
+        req.setRequestHeader("Accept", "application/json");
+        req.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+        req.setRequestHeader("Prefer", "odata.include-annotations=\"*\"");
+        req.onreadystatechange = function () {
+            if (this.readyState === 4) {
+                req.onreadystatechange = null;
+                if (this.status === 200) {
+                    var results = JSON.parse(this.response);
+                    if (results.value.length > 0) {
+                        return results.value[0]["lvo_returnconcessionrequestitemid"];
+                    } else {
+                        return;
+                    }
+
+                } else {
+                    return;
+                    console.log(this.statusText);
+                }
+            }
+        };
+        req.send();
+    };
+
+    function getCurrencyByCode(currencyCode) {
+        var req = new XMLHttpRequest();
+        req.open("GET", Xrm.Page.context.getClientUrl() + "/api/data/v9.1/transactioncurrencies?$filter=isocurrencycode eq '" + currencyCode + "'", false);
+        req.setRequestHeader("OData-MaxVersion", "4.0");
+        req.setRequestHeader("OData-Version", "4.0");
+        req.setRequestHeader("Accept", "application/json");
+        req.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+        req.setRequestHeader("Prefer", "odata.include-annotations=\"*\"");
+        req.onreadystatechange = function () {
+            if (this.readyState === 4) {
+                req.onreadystatechange = null;
+                if (this.status === 200) {
+                    var results = JSON.parse(this.response);
+                    if (results.value.length > 0) {
+                        return results.value[0]["transactioncurrencyid"];
+                    } else {
+                        return;
+                    }
+                } else {
+                    return;
+                    console.log("Retrieve Currency Error: " + this.statusText);
+                }
+            }
+        };
+        req.send();
+    };
+
+</script>
+</body>
+</html>
