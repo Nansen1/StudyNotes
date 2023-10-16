@@ -2,19 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="565b412c-4ac7-496b-8dfe-2171889932bb" name="Default Changelist" comment="yaf demo">
-      <change afterPath="$PROJECT_DIR$/.idea/composerJson.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PHP/Yaf/Yaf框架入门教程/控制器中独立Action文件的定义.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PHP/Yaf/demo/application/controllers/User.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Vue/Element/OrderSearchP2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Study Note.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Study Note.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PHP/Yaf/Yaf框架入门教程/生成Yaf骨架代码并运行.md" beforeDir="false" afterPath="$PROJECT_DIR$/PHP/Yaf/Yaf框架入门教程/生成Yaf骨架代码并运行.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PHP/Yaf/yaf-codes-generator" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PHP/Yaf/yaf-demo" beforeDir="false" afterPath="$PROJECT_DIR$/PHP/Yaf/yaf-demo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PHP/Yaf/yaf-demo/app/controllers/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/PHP/Yaf/yaf-demo/app/controllers/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Vue/Element/OrderSearch.html" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/Element/OrderSearch.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,28 +20,64 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/PHP/Yaf/demo/index.php">
+        <entry file="file://$PROJECT_DIR$/PHP/Yaf/yaf-demo/app/modules/Example/controllers/User.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="8" selection-start-line="8" selection-end-line="8" />
+            <state relative-caret-position="297">
+              <caret line="11" column="1" lean-forward="true" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/PHP/Yaf/demo/application/Bootstrap.php">
+        <entry file="file://$PROJECT_DIR$/PHP/Yaf/demo/application/modules/Example/controllers/Config.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="243">
-              <caret line="9" column="28" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="28" />
+            <state relative-caret-position="189">
+              <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/PHP/Yaf/demo/conf/application.ini">
+        <entry file="file://$PROJECT_DIR$/PHP/Yaf/demo/application/plugins/Sample.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="189">
+              <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/PHP/Yaf/yaf-demo/app/actions/user/add.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="54">
-              <caret line="2" column="44" selection-start-line="2" selection-start-column="44" selection-end-line="2" selection-end-column="44" />
+              <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/PHP/Yaf/yaf-demo/app/controllers/Route.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1768">
+              <caret line="4" column="6" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/PHP/Yaf/yaf-demo/app/defines/Code.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="162">
+              <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/PHP/Yaf/yaf-demo/app/modules/Example/controllers/Route.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1849">
+              <caret line="4" column="6" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -59,59 +85,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PHP/Yaf/yaf-demo/app/modules/Example/controllers/Config.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="351">
+            <state relative-caret-position="-40">
               <caret line="13" column="26" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/PHP/Yaf/yaf-demo/app/controllers/User.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="702">
-              <caret line="26" column="18" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/PHP/Yaf/demo/application/controllers/User.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="567">
-              <caret line="21" column="5" selection-start-line="21" selection-start-column="5" selection-end-line="23" selection-end-column="61" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/PHP/Yaf/Yaf框架入门教程/Controller.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="540">
-                <caret line="20" column="1" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="1" />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/PHP/Yaf/demo/application/controllers/Error.php">
+        <entry file="file://$PROJECT_DIR$/PHP/Yaf/yaf-demo/app/Bootstrap.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="297">
-              <caret line="11" column="19" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/PHP/Yaf/Yaf框架入门教程/生成Yaf骨架代码并运行.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="189">
-                <caret line="7" column="16" lean-forward="true" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
-              </first_editor>
-              <second_editor />
+            <state relative-caret-position="324">
+              <caret line="76" column="44" lean-forward="true" selection-start-line="76" selection-start-column="44" selection-end-line="76" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -120,7 +104,7 @@
         <entry file="file://$PROJECT_DIR$/PHP/Yaf/yaf-demo/app/modules/Example/controllers/Request.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="2025">
-              <caret line="77" column="5" lean-forward="true" selection-start-line="49" selection-start-column="4" selection-end-line="77" selection-end-column="5" />
+              <caret line="77" column="5" selection-start-line="49" selection-start-column="4" selection-end-line="77" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -144,13 +128,16 @@
       <find>loading</find>
       <find>dialogVisible</find>
       <find>php.exe</find>
+      <find>.htaccess</find>
     </findStrings>
     <dirStrings>
       <dir>E:\Study Note</dir>
+      <dir>E:\Study Note\PHP\Yaf\yaf-demo</dir>
+      <dir>E:\Study Note\PHP\Yaf\demo</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/PHP/Yaf/yaf-demo" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -235,7 +222,76 @@
               <item name="PHP" type="462c0819:PsiDirectoryNode" />
               <item name="Yaf" type="462c0819:PsiDirectoryNode" />
               <item name="demo" type="462c0819:PsiDirectoryNode" />
-              <item name="conf" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="models" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Study Note" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Study Note" type="462c0819:PsiDirectoryNode" />
+              <item name="PHP" type="462c0819:PsiDirectoryNode" />
+              <item name="Yaf" type="462c0819:PsiDirectoryNode" />
+              <item name="demo" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Study Note" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Study Note" type="462c0819:PsiDirectoryNode" />
+              <item name="PHP" type="462c0819:PsiDirectoryNode" />
+              <item name="Yaf" type="462c0819:PsiDirectoryNode" />
+              <item name="demo" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="Example" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Study Note" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Study Note" type="462c0819:PsiDirectoryNode" />
+              <item name="PHP" type="462c0819:PsiDirectoryNode" />
+              <item name="Yaf" type="462c0819:PsiDirectoryNode" />
+              <item name="demo" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="Example" type="462c0819:PsiDirectoryNode" />
+              <item name="controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Study Note" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Study Note" type="462c0819:PsiDirectoryNode" />
+              <item name="PHP" type="462c0819:PsiDirectoryNode" />
+              <item name="Yaf" type="462c0819:PsiDirectoryNode" />
+              <item name="demo" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="plugins" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Study Note" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Study Note" type="462c0819:PsiDirectoryNode" />
+              <item name="PHP" type="462c0819:PsiDirectoryNode" />
+              <item name="Yaf" type="462c0819:PsiDirectoryNode" />
+              <item name="demo" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Study Note" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Study Note" type="462c0819:PsiDirectoryNode" />
+              <item name="PHP" type="462c0819:PsiDirectoryNode" />
+              <item name="Yaf" type="462c0819:PsiDirectoryNode" />
+              <item name="demo" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="error" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Study Note" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Study Note" type="462c0819:PsiDirectoryNode" />
+              <item name="PHP" type="462c0819:PsiDirectoryNode" />
+              <item name="Yaf" type="462c0819:PsiDirectoryNode" />
+              <item name="demo" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="index" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Study Note" type="b2602c69:ProjectViewProjectNode" />
@@ -251,6 +307,61 @@
               <item name="Yaf" type="462c0819:PsiDirectoryNode" />
               <item name="yaf-demo" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Study Note" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Study Note" type="462c0819:PsiDirectoryNode" />
+              <item name="PHP" type="462c0819:PsiDirectoryNode" />
+              <item name="Yaf" type="462c0819:PsiDirectoryNode" />
+              <item name="yaf-demo" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="actions" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Study Note" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Study Note" type="462c0819:PsiDirectoryNode" />
+              <item name="PHP" type="462c0819:PsiDirectoryNode" />
+              <item name="Yaf" type="462c0819:PsiDirectoryNode" />
+              <item name="yaf-demo" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="actions" type="462c0819:PsiDirectoryNode" />
+              <item name="user" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Study Note" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Study Note" type="462c0819:PsiDirectoryNode" />
+              <item name="PHP" type="462c0819:PsiDirectoryNode" />
+              <item name="Yaf" type="462c0819:PsiDirectoryNode" />
+              <item name="yaf-demo" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Study Note" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Study Note" type="462c0819:PsiDirectoryNode" />
+              <item name="PHP" type="462c0819:PsiDirectoryNode" />
+              <item name="Yaf" type="462c0819:PsiDirectoryNode" />
+              <item name="yaf-demo" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="defines" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Study Note" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Study Note" type="462c0819:PsiDirectoryNode" />
+              <item name="PHP" type="462c0819:PsiDirectoryNode" />
+              <item name="Yaf" type="462c0819:PsiDirectoryNode" />
+              <item name="yaf-demo" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="library" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Study Note" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Study Note" type="462c0819:PsiDirectoryNode" />
+              <item name="PHP" type="462c0819:PsiDirectoryNode" />
+              <item name="Yaf" type="462c0819:PsiDirectoryNode" />
+              <item name="yaf-demo" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="models" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Study Note" type="b2602c69:ProjectViewProjectNode" />
@@ -260,6 +371,27 @@
               <item name="yaf-demo" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="modules" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Study Note" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Study Note" type="462c0819:PsiDirectoryNode" />
+              <item name="PHP" type="462c0819:PsiDirectoryNode" />
+              <item name="Yaf" type="462c0819:PsiDirectoryNode" />
+              <item name="yaf-demo" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="Api" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Study Note" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Study Note" type="462c0819:PsiDirectoryNode" />
+              <item name="PHP" type="462c0819:PsiDirectoryNode" />
+              <item name="Yaf" type="462c0819:PsiDirectoryNode" />
+              <item name="yaf-demo" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="Api" type="462c0819:PsiDirectoryNode" />
+              <item name="controllers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Study Note" type="b2602c69:ProjectViewProjectNode" />
@@ -287,7 +419,19 @@
               <item name="Study Note" type="462c0819:PsiDirectoryNode" />
               <item name="PHP" type="462c0819:PsiDirectoryNode" />
               <item name="Yaf" type="462c0819:PsiDirectoryNode" />
-              <item name="Yaf框架入门教程" type="462c0819:PsiDirectoryNode" />
+              <item name="yaf-demo" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Study Note" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Study Note" type="462c0819:PsiDirectoryNode" />
+              <item name="PHP" type="462c0819:PsiDirectoryNode" />
+              <item name="Yaf" type="462c0819:PsiDirectoryNode" />
+              <item name="yaf-demo" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Study Note" type="b2602c69:ProjectViewProjectNode" />
@@ -354,7 +498,12 @@
       <workItem from="1632484290838" duration="778000" />
       <workItem from="1634295018075" duration="4356000" />
       <workItem from="1634601352732" duration="607000" />
-      <workItem from="1635246989332" duration="57000" />
+      <workItem from="1635246989332" duration="421000" />
+      <workItem from="1636331719277" duration="780000" />
+      <workItem from="1636349555587" duration="1951000" />
+      <workItem from="1636442122555" duration="814000" />
+      <workItem from="1636502362991" duration="744000" />
+      <workItem from="1645672255426" duration="4086000" />
     </task>
     <task id="LOCAL-00001" summary="Element Table">
       <created>1631623307806</created>
@@ -367,12 +516,12 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19010000" />
+    <option name="totallyTimeSpent" value="27749000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1050" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.28004292" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16255365" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -427,13 +576,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="27">
           <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PHP/Yaf/demo/application/modules/Example/controllers/Config.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -493,13 +635,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/PHP/Yaf/yaf-codes-generator/.gitignore" />
     <entry file="file://$PROJECT_DIR$/PHP/Yaf/yaf-codes-generator/.gitattributes" />
-    <entry file="file://$PROJECT_DIR$/PHP/Yaf/yaf-demo/app/Bootstrap.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2681">
-          <caret line="32" column="50" selection-start-line="32" selection-start-column="50" selection-end-line="32" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_PLUGINS_DIR$/doc_plugin_cn.jar!/library/yaf/yaf.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="177">
@@ -531,24 +666,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PHP/Yaf/yaf-demo/app/modules/Example/controllers/Config.php">
+    <entry file="file://$PROJECT_DIR$/PHP/Yaf/demo/application/controllers/User.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="13" column="26" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
+        <state relative-caret-position="567">
+          <caret line="21" column="5" selection-start-line="21" selection-start-column="5" selection-end-line="23" selection-end-column="61" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PHP/Yaf/yaf-demo/app/controllers/User.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="702">
-          <caret line="26" column="18" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="18" />
+        <state relative-caret-position="540">
+          <caret line="20" column="26" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PHP/Yaf/demo/application/controllers/User.php">
+    <entry file="file://$PROJECT_DIR$/PHP/Yaf/yaf-demo/app/models/User.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="567">
-          <caret line="21" column="5" selection-start-line="21" selection-start-column="5" selection-end-line="23" selection-end-column="61" />
+        <state relative-caret-position="54">
+          <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
+          <folding>
+            <element signature="e#7#52#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -562,11 +700,35 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/PHP/Yaf/demo/application/controllers/Error.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="11" column="19" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PHP/Yaf/yaf-demo/conf/application.ini">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PHP/Yaf/demo/.htaccess">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="81">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PHP/Yaf/demo/application/models/Sample.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/PHP/Yaf/Yaf框架入门教程/生成Yaf骨架代码并运行.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="189">
-            <caret line="7" column="16" lean-forward="true" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
+            <caret line="7" column="16" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
           </first_editor>
           <second_editor />
         </state>
@@ -575,14 +737,70 @@
     <entry file="file://$PROJECT_DIR$/PHP/Yaf/yaf-demo/app/modules/Example/controllers/Request.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2025">
-          <caret line="77" column="5" lean-forward="true" selection-start-line="49" selection-start-column="4" selection-end-line="77" selection-end-column="5" />
+          <caret line="77" column="5" selection-start-line="49" selection-start-column="4" selection-end-line="77" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PHP/Yaf/demo/application/controllers/Error.php">
+    <entry file="file://$PROJECT_DIR$/PHP/Yaf/yaf-demo/app/modules/Example/controllers/User.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="297">
-          <caret line="11" column="19" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="19" />
+          <caret line="11" column="1" lean-forward="true" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PHP/Yaf/demo/application/modules/Example/controllers/Config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PHP/Yaf/demo/application/plugins/Sample.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PHP/Yaf/yaf-demo/app/actions/user/add.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PHP/Yaf/yaf-demo/app/controllers/Route.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1768">
+          <caret line="4" column="6" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PHP/Yaf/yaf-demo/app/defines/Code.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PHP/Yaf/yaf-demo/app/modules/Example/controllers/Route.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1849">
+          <caret line="4" column="6" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PHP/Yaf/yaf-demo/app/modules/Example/controllers/Config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-40">
+          <caret line="13" column="26" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PHP/Yaf/yaf-demo/app/Bootstrap.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="76" column="44" lean-forward="true" selection-start-line="76" selection-start-column="44" selection-end-line="76" selection-end-column="44" />
         </state>
       </provider>
     </entry>
