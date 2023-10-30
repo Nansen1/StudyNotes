@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动画</title>
+    <script src="./vue3.js"></script>
+    <style>
+        .v-enter-from,
+        .v-leave-to {
+            opacity: 0;
+        }
+        /* 可以设置不同的进入和离开动画   */
+        /* 设置持续时间和动画函数        */
+        .v-enter-active,
+        .v-leave-active{
+            transition: all 1s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h3>单元素过渡效果</h3>
+        <button @click="toggleBtn">切换</button>
+        <transition>
+            <div v-show="isShow">显示元素</div>
+        </transition>
+    </div>
+
+    <script>
+        const { ref } = Vue;
+        const App = Vue.createApp({
+            setup(){
+                const isShow = ref(false);
+
+                function toggleBtn(){
+                    isShow.value = !isShow.value
+                }
+                return {
+                    isShow,
+                    toggleBtn
+                }
+            }
+        });
+
+        App.mount('#app');
+    </script>
+
+</body>
+
+</html>

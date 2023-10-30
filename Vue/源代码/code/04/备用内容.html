@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动画</title>
+    <script src="./vue3.js"></script>
+    <style>
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h3>插槽内容</h3>
+        <my-comp>
+            hello
+        </my-comp>
+    </div>
+
+    <script>
+        const { ref } = Vue
+        const MyComp = {
+            name: 'my-comp',
+            template:`
+            <button type="submit">
+                <slot>submit</slot>
+            </button>
+            `,
+            data(){
+                return{
+                    compData: {
+                        name: '插槽所在作用域的数据CompData的name属性值'
+                    }
+                }
+            }
+        }
+        const App = Vue.createApp({
+            components: {
+                'my-comp': MyComp
+            },
+            setup(){
+                const fatherData = ref('test');
+                return {
+                    fatherData
+                }
+            }
+        });
+        App.mount('#app');
+    </script>
+
+</body>
+
+</html>

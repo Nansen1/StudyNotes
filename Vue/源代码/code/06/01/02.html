@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue3.js"></script>
+    <script src="../vue-router.global.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <h1>Hello App!</h1>
+        <p>
+            <router-link to="/student/2001">Student2001</router-link>
+            <router-link to="/student/2002">Student2002</router-link>
+            <!-- <router-link to="/student/2001/homework/001">HomeWrok组件</router-link> -->
+        </p>
+
+        <router-view></router-view>
+    </div>
+
+    <script>
+        const Student = {
+            template: `
+            <div>name:---lucy</div>
+            ` ,
+            // watch: {
+            //     $route(to, from) {
+            //         // 对路由变化作出响应...
+            //         console.log(to.path)
+            //         console.log(to.params)
+            //         console.log(from.path)
+            //         console.log(from.params)
+            //     }
+            // }
+            beforeRouteUpdate(to, from, next) {
+                console.log(to.path)
+                console.log(to.params)
+                console.log(from.path)
+                console.log(from.params)
+                next()
+            }
+        }
+        const HomeWrok = {
+            template: `
+            <div>id:---{{$route.params.id}}</div>
+            <div>homeworkid:---{{$route.params.work_id}}</div>
+            <div>$routes对象内容:---{{$route}}</div>
+            `
+        }
+
+        const routes = [
+            // 动态路径参数 以冒号开头
+            { path: '/student/:id', component: Student },
+            { path: '/student/:id/homework/:work_id', component: HomeWrok },
+            {
+                // 会匹配所有路径
+                path: '*'
+            },
+            {
+                // 会匹配以 `/student-` 开头的任意路径
+                path: '/student-*'
+            }
+        ]
+        const router = VueRouter.createRouter({
+            history: VueRouter.createWebHashHistory(),
+            routes,
+        })
+
+        const app = Vue.createApp({})
+        app.use(router)
+
+        app.mount('#app')
+
+    </script>
+</body>
+
+</html>

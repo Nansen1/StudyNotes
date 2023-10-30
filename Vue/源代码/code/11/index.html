@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>响应式单页面管理（SPA）系统：TODO</title>
+    <script src="./vue3.js"></script>
+    <script src="./vue-router.global.js"></script>
+    <style>
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h3>响应式单页面管理（SPA）系统：TODO</h3>
+        <router-link to="/todo">todo</router-link>
+        <router-link to="/recyle">recyle</router-link>
+        <router-view></router-view>
+    </div>
+
+    <script>
+        // Todo组件
+        const Todo = {
+            template: `
+            <div class="todoCon">待办事项页面</div>
+            `
+        }
+
+        // Recyle组件
+        const Recyle = {
+            template: `
+            <div class="recyleCon">回收站页面</div>
+            `
+        }
+
+        const routes = [
+            { path: '/',component: Todo },
+            { path: '/todo', name: 'Todo', component: Todo },
+            { path: '/recyle', name: 'Recyle', component: Recyle }
+        ]
+
+        const router = VueRouter.createRouter({
+            history: VueRouter.createWebHashHistory(),
+            routes
+        })
+
+        const myApp = {
+            // 注册组件
+            components: {
+                Todo,
+                Recyle
+            }
+        }
+
+        // 创建TODO应用的根实例
+        const App = Vue.createApp(myApp);
+
+        // 使用路由
+        App.use(router);
+
+        // 挂载app节点，得到根组件
+        App.mount('#app');
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,13 @@
+{
+    "students": [
+      { "id": 1, "name": "zhangsan", "sex": "male", "score": 89 },
+      { "id": 2, "name": "wangwu", "sex": "female", "score": 79 },
+      { "id": 3, "name": "lisi", "sex": "femal", "score": 95 },
+      { "id": 4, "name": "qiyi", "sex": "male", "score": 93 }
+    ],
+    "homeworks": [
+      { "work_id": "001", "type": "Math", "count": 1 },
+      { "work_id": "002", "type": "English", "count": 1 },
+      { "work_id": "003", "type": "P.E", "count": 1 }
+    ]
+}

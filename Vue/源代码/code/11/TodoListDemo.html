@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>响应式单页面管理（SPA）系统：TODO</title>
+    <script src="./vue3.js"></script>
+    <script src="./vue-router.global.js"></script>
+    <style>
+        #app {
+            width: 100%;
+            height: 100vh;
+        }
+
+        .pages {
+            width: 100%;
+            height: 40px;
+            display: flex;
+        }
+
+        .pages a {
+            flex: 1;
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: skyblue;
+            text-decoration: none;
+            border: 1px solid #eee;
+            border-radius: 6px;
+        }
+
+        .todoCon {
+            margin-top: 20px;
+            padding: 20px 10px;
+            background-color: yellow;
+        }
+
+        ul,
+        li {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        li {
+            display: inline-block;
+            width: 100%;
+        }
+
+        .del,
+        .recybtn {
+            float: right;
+            padding: 2px 10px;
+            font-size: 12px;
+            border-radius: 10px;
+            background-color: rgb(245, 191, 196);
+            color: #fff;
+        }
+
+        .select {
+            margin-right: 10px;
+        }
+
+        .title,
+        .delTitle {
+            color: #333;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 70%;
+        }
+
+        .singleitem,
+        .delItem {
+            display: flex;
+            flex-wrap: nowrap;
+            margin: 10px 0;
+            justify-content: space-between;
+        }
+
+        .recyleCon {
+            background-color: skyblue;
+            padding: 10px 10px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .todoInput {
+            width: 60%;
+            padding: 6px 4px;
+            margin-left: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h3>响应式单页面管理（SPA）系统：TODO</h3>
+        <div class="pages">
+            <router-link to="/todo">todo</router-link>
+            <router-link to="/recyle">recyle</router-link>
+        </div>
+
+        <router-view></router-view>
+    </div>
+
+    <script>
+        const { reactive, toRefs, computed } = Vue;
+
+        // 单个事项组件
+        const SingleTodo = {
+            props: ['todo'],
+            template: `
+                <div class="singleitem">
+                    <input type="checkbox" @click="handleDone(todo)" 
+                    v-model="todo.done" class="select" />
+                    <input v-if="isShow" type="text" 
+                    @blur="handleUpdate" 
+                    v-model="updateValue" class="edit" />
+                    <span v-else @click="handleEdit" class="title">{{todo.title}}</span>
+                    <span @click="handleDelete" class="del">删除</span>  
+                </div>
+            `,
+            data() {
+                return {
+                    isShow: false,
+                    updateValue: this.todo.title
+                }
+            },
+            methods: {
+                handleDone() {
+                    this.todo.done = !this.todo.done;
+                    this.$emit('todoDone', this.todo)
+                },
+                handleEdit() {
+                    this.isShow = true;
+                },
+                handleUpdate() {
+                    this.todo.title = this.updateValue;
+                    this.isShow = false;
+                    this.$emit('updateTodo', this.todo);
+                },
+                handleDelete() {
+                    this.$emit('delTodo', this.todo);
+                }
+            }
+        }
+
+        // Todo组件
+        const Todo = {
+            components: {
+                'SingleTodo': SingleTodo
+            },
+            template: `
+                <div class="todoCon">
+                    <div class="todoWrap">
+                        <input type="text" 
+                        v-model="inputValue" 
+                        placeholder="请输入..."
+                        class="todoInput" 
+                        @keyup.enter="handleCreateTodo" />
+                        <div class="todolist">
+                            <ul>
+                                <li v-for="item in todos">
+                                    <div v-if="!item.isDel">
+                                        <SingleTodo :todo="item" @todoDone="todoDone" @delTodo="delTodo" @updateTodo="updateTodo"></SingleTodo>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `,
+            data() {
+                return {
+                    inputValue: '',
+                    todos: [{}],
+                    delTodos: []
+                }
+            },
+            methods: {
+                // 创建待办事项
+                handleCreateTodo() {
+                    if (!this.todos) {
+                        this.todos = []
+                    }
+                    this.todos.push({ id: this.todos.length, title: this.inputValue, done: false, isDel: false });
+                    this.inputValue = ''
+                    window.localStorage.setItem('todos', JSON.stringify(this.todos));
+                },
+                // 完成该事项
+                todoDone(todo) {
+                    let index = this.todos.findIndex((cur, index) => cur === todo);
+                    this.todos[index] = todo;
+                    window.localStorage.setItem('todos', JSON.stringify(this.todos));
+                },
+                // 删除事项
+                delTodo(todo) {
+                    let index = this.todos.findIndex((cur, index) => cur === todo);
+                    this.todos[index].isDel = true;
+                    // this.todos.splice(index, 1);
+                    window.localStorage.setItem('todos', JSON.stringify(this.todos));
+                },
+                // 更新事项
+                updateTodo(todo) {
+                    let index = this.todos.findIndex(item => item === todo);
+                    this.todos[index] = todo;
+                    window.localStorage.setItem('todos', JSON.stringify(this.todos));
+                }
+            },
+            created() {
+                let todos = JSON.parse(window.localStorage.getItem('todos'));
+                this.todos = todos;
+            }
+        }
+
+
+
+        // 单个已删除事项组件
+        const doneTodo = {
+            props: ['doneTodo'],
+            template: `
+                <li>
+                    <div class="delItem">
+                        <span class="delTitle">{{doneTodo.title}}</span>
+                        <span class="recybtn" @click="handleRemove">恢复</span>
+                    </div>
+                </li>
+            `,
+            methods: {
+                handleRemove() {
+                    this.$emit('noDone');
+                }
+            }
+        }
+        // Recyle组件
+        const Recyle = {
+            components: {
+                doneTodo,
+            },
+            template: `
+            <div class="recyleCon">
+                <ul>
+                    <doneTodo v-for="item in doneTodos" :doneTodo="item" @noDone="noDone(item)"></doneTodo>
+                </ul>    
+            </div>
+            `,
+            data() {
+                return {
+                    allTodos: JSON.parse(window.localStorage.getItem('todos')),
+                    doneTodos: JSON.parse(window.localStorage.getItem('todos')).filter(item => item.isDel)
+                }
+            },
+            methods: {
+                // 恢复已删除事项
+                noDone(doneTodo) {
+                    this.doneTodos = this.doneTodos.filter(item => item.id != doneTodo.id);
+                    this.allTodos.forEach(item => {
+                        item.isDel = item.id === doneTodo.id ? false : item.isDel;
+                    });
+                    window.localStorage.setItem('todos', JSON.stringify(this.allTodos));
+                }
+            }
+        }
+
+        const routes = [
+            { path: '/', component: Todo },
+            { path: '/todo', name: 'Todo', component: Todo },
+            { path: '/recyle', name: 'Recyle', component: Recyle }
+        ]
+
+        const router = VueRouter.createRouter({
+            history: VueRouter.createWebHashHistory(),
+            routes
+        })
+
+        const myApp = {
+            // 注册组件
+            components: {
+                Todo,
+                Recyle
+            },
+
+        }
+
+        // 创建TODO应用的根实例
+        const App = Vue.createApp(myApp);
+
+        // 使用路由
+        App.use(router);
+
+        // 挂载app节点，得到根组件
+        App.mount('#app');
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/vue3.js"></script>
+</head>
+
+<body>
+        <div id='app-one'>
+            <p @click="addNum">我是{{msg}}，点击我加一</p>
+            <p>{{sharesState.result}}</p>
+        </div>
+        <div id='app-two'>
+            <p @click="subNum">我是{{msg}}，点击我减一</p>
+            <p>{{sharesState.result}}</p>
+        </div>
+    <script>
+        const { createApp, reactive } = Vue;
+        const store = {
+            state: reactive({
+                result: 0
+            }),
+            addResultAction() {
+                this.state.result += 1
+            },
+            subResultAction() {
+                this.state.result -= 1
+            }
+        }
+        // 加一组件实例
+        const AppOne = createApp(
+            {
+                // state状态
+                data: function () {
+                    return {
+                        msg: '我是AppOne',
+                        sharesState: store.state
+                    }
+                },
+                methods: {
+                    addNum() {
+                        console.log(1)
+                        store.addResultAction();
+                    }
+                }
+            }
+        ).mount('#app-one');
+
+        // 减一组件实例
+        const AppTwo = createApp(
+            {
+                // state状态
+                data: function () {
+                    return {
+                        msg: '我是AppTwo',
+                        sharesState: store.state
+                    }
+                },
+                methods: {
+                    subNum() {
+                        console.log(2)
+                        store.subResultAction();
+                    }
+                }
+            }
+        ).mount('#app-two');
+    </script>
+    
+</body>
+
+</html>

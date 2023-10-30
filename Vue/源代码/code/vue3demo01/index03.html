@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/vue3.js"></script>
+    <!-- <script src="https://unpkg.com/vue@next"></script> -->
+</head>
+<body>
+    <div id="app">
+        <!-- 局部组件使用 -->
+        <comp-a></comp-a>
+        <comp-b></comp-b>
+        <comp-c></comp-c>
+    </div>
+
+    <script>
+        const compA = {
+            template: `<div>我是局部组件compA</div>`
+        }
+        const compB = {
+            template: `<div>我是局部组件compB</div>`
+        }
+        const compC = {
+            template: `<div>我是局部组件compC</div>`
+        }
+
+        // 创建一个Vue 应用
+        const app = Vue.createApp({
+            components: {
+                'comp-a': compA,
+                'comp-b': compB,
+                'comp-c': compC
+            }
+        })
+    
+        app.mount('#app')
+    </script>
+</body>
+</html>

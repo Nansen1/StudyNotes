@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .con {
+        /* 根据根元素font-size大小动态设置宽高 */
+        width: 20rem;
+        height: 10rem;
+        background-color: gray;
+    }
+
+    .son {
+        /* 设置font-size为1rem 代表1rem=根元素的font-size的大小*/
+        font-size: 1rem;
+        color: blue;
+    }
+</style>
+
+<body>
+    <div class="con">
+        <div class="son">这是子元素son</div>
+    </div>
+</body>
+
+</html>
+<script>
+    // 三个步骤:
+    // 1.获取根元素html的宽度
+    let htmlwidth = document.documentElement.clientWidth || document.body.clientWidth;
+    console.log(htmlwidth);
+
+    // 2.获取根元素dom
+    let htmlDom = document.getElementsByTagName("html")[0]
+    console.log(htmlDom);
+
+    //3.设置根元素的font-size大小为根元素宽度的1/20
+    htmlDom.style.fontSize = htmlwidth / 20 + 'px';
+
+
+</script>

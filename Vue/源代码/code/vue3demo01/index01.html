@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/vue3.js"></script>
+    <!-- <script src="https://unpkg.com/vue@next"></script> -->
+</head>
+<body>
+    <div id="app">
+        <!-- 全局组件复用 -->
+        <my-gloabl-comp>全局组件使用1</my-gloabl-comp>
+        <my-gloabl-comp>全局组件使用2</my-gloabl-comp>
+        <my-gloabl-comp>全局组件使用3</my-gloabl-comp>
+    </div>
+
+    <script>
+        // 创建一个Vue 应用
+        const app = Vue.createApp({})
+        // 自定义全局组件
+        app.component('my-gloabl-comp', {
+            template: `<h1>自定义全局组件并注册</h1>`
+        })
+        app.mount('#app')
+    </script>
+</body>
+</html>

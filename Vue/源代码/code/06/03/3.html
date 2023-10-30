@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue3.js"></script>
+    <script src="../vue-router.global.js"></script>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            height: 200px;
+            width: 100%;
+            background-color: skyblue;
+            margin-bottom: 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="app">
+        <h1>keep-alive</h1>
+        <router-link to="/">home</router-link>
+        <router-link to="/about">about</router-link>
+        <keep-alive include="home">
+            <router-view></router-view>
+        </keep-alive>
+    </div>
+
+    <script>
+        const Home = {
+            name: 'home',
+            template: `<div>--首页---</div>
+            <input type="text" :value="hometext"/>
+            ` }
+        const About = {
+            template: `<div>-----About页面----</div> <input type="text" :value="abouttext"/>`
+        }
+
+
+        const routes = [
+            {
+                path: '/',
+                name: 'Home',
+                component: Home,
+                meta: {
+                    keepAlive: true // 需要被缓存
+                }
+            },
+            {
+                path: '/about',
+                name: 'About',
+                component: About,
+                meta: {
+                    keepAlive: false // 不需要被缓存
+                }
+            }
+        ]
+
+        const router = VueRouter.createRouter({
+            history: VueRouter.createWebHashHistory(),
+            routes
+        })
+
+
+        const app = Vue.createApp({
+            props: [
+                'age',
+                'name'
+            ],
+            data: function () {
+                return {
+                    hometext: '',
+                    abouttext: ''
+                }
+            }
+        })
+        app.use(router)
+
+        app.mount('#app')
+
+    </script>
+</body>
+
+</html>

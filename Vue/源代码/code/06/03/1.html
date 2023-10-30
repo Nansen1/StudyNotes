@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div>监听hash改变字体颜色</div>
+    <script type="text/javascript">
+        window.onhashchange = function(event){
+            console.log(event.oldURL,event.newURL)
+            let hash = location.hash.slice(1);
+            document.body.style.color = hash;
+        }
+    </script>
+</body>
+</html>

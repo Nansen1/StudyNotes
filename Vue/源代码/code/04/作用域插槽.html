@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动画</title>
+    <script src="./vue3.js"></script>
+    <style>
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h3>作用域插槽</h3>
+        <my-list>
+            <template v-slot:default="slotProps">
+                <span>{{ slotProps.idx }}</span></br>
+                <span class="green">{{ slotProps.list }}</span>
+            </template>
+        </my-list>
+    </div>
+
+    <script>
+        const MyList = {
+            name: 'my-list',
+            template: `
+            <ul>
+                <li v-for="(list,index) in lists">
+                    <slot :list="list" :idx="index"></slot>  
+                </li>
+            </ul>
+            `,
+            data(){
+                return {
+                    lists: ['list1','list2','list3']
+                }
+            }
+        }
+        const App = Vue.createApp({
+            components: {
+                'my-list': MyList
+            }
+        });
+        App.mount('#app');
+    </script>
+
+</body>
+
+</html>

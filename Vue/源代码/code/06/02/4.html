@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue3.js"></script>
+    <script src="../vue-router.global.js"></script>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        .con {
+            display: flex;
+        }
+        .content {
+            width: 80%;
+            height: 80vh;
+            background-color: yellow;
+        }
+
+        .footer {
+            width: 100%;
+            background-color: gray;
+            height: 10vh;
+        }
+
+        .sidebar {
+            width: 20%;
+            height: 80vh;
+            background-color: pink;
+        }
+
+        .header {
+            width: 100%;
+            height: 10vh;
+            background-color: skyblue;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="app">
+        <!-- <h1>命名视图</h1> -->
+        <router-view class="view header" name="a"></router-view>
+        <div class="con">
+            <router-view class="view sidebar" name="b"></router-view>
+            <router-view class="view content"></router-view>
+        </div>
+        <router-view class="view footer" name="c"></router-view>
+    </div>
+
+    <script>
+        const Student = { template: `<div>--Student---</div>` }
+        const Sidebar = { template: `<div>---Sidebar---</div>` }
+        const Header = { template: `<div>---Header---</div>` }
+        const Footer = { template: `<div>---Footer---</div>` }
+
+        const routes = [
+            {
+                path: '/',
+                components: {
+                    default: Student,
+                    a: Header,
+                    b: Sidebar,
+                    c: Footer
+                }
+            }
+        ]
+
+        const router = VueRouter.createRouter({
+            history: VueRouter.createWebHashHistory(),
+            routes,
+        })
+
+
+        const app = Vue.createApp({})
+        app.use(router)
+
+        app.mount('#app')
+
+    </script>
+</body>
+
+</html>

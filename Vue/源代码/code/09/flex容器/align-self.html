@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>flex-direction</title>
+    <style>
+        .box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 500px;
+            background-color: grey;
+            height: 120px;
+        }
+
+        .box div:nth-child(1) {
+            background-color: yellow;
+            width: 100px;
+            height: 100px;
+        }
+        .box div:nth-child(2) {
+            background-color: green;
+            width: 100px;
+            height: 100px;
+        }
+        .box div:nth-child(3) {
+            align-self: flex-end;
+            background-color: skyblue;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div>One</div>
+        <div>Two</div>
+        <div>Three</div>
+    </div>
+
+</body>
+
+</html>

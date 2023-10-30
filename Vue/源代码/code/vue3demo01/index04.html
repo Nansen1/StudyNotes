@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/vue3.js"></script>
+    <!-- <script src="https://unpkg.com/vue@next"></script> -->
+</head>
+
+<body>
+    <div id="app">
+        <div id="toggle" v-show="isShow">DIV显示与隐藏</div>
+        <button @click="toggleDiv">点击我切换</button>
+        <p v-if="seen">现在你看到我了</p>
+        <p v-else>否则显示我啦</p>
+    </div>
+    <script>
+        const Counter = {
+            data() {
+                return {
+                    isShow: true,
+                    seen: false
+                }
+            },
+            methods: {
+                toggleDiv(){
+                    this.isShow = !this.isShow
+                }
+            }
+        }
+        const app = Vue.createApp(Counter)
+        app.mount('#app')
+    </script>
+</body>
+
+</html>

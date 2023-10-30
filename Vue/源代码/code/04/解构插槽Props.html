@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动画</title>
+    <script src="./vue3.js"></script>
+    <style>
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h3>解构作用域插槽Props</h3>
+        <my-list>
+            <!-- <template v-slot="{list, idx}">
+                <span>{{ idx }}</span></br>
+                <span class="green">{{ list }}</span>
+            </template> -->
+            <template v-slot="{list: item, idx: i}">
+                <span>{{ item }}</span></br>
+                <span class="green">{{ i }}</span>
+            </template>
+        </my-list>
+    </div>
+
+    <script>
+        const MyList = {
+            name: 'my-list',
+            template: `
+            <ul>
+                <li v-for="(list,index) in lists">
+                    <slot :list="list" :idx="index"></slot>  
+                </li>
+            </ul>
+            `,
+            data(){
+                return {
+                    lists: ['list1','list2','list3']
+                }
+            }
+        }
+        const App = Vue.createApp({
+            components: {
+                'my-list': MyList
+            }
+        });
+        App.mount('#app');
+    </script>
+
+</body>
+
+</html>

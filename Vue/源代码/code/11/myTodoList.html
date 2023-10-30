@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>响应式单页面管理（SPA）系统：TODO</title>
+    <style>
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        响应式单页面管理（SPA）系统：TODO
+    </div>
+
+
+    <script src="./vue3.js"></script>
+    <script>
+        const { reactive, toRefs } = Vue
+
+
+
+        const MyApp = {
+            setup() {
+                const state = reactive({
+
+                })
+                
+
+                return {
+                    ...toRefs(state)
+                }
+            }
+        }
+
+        const app = Vue.createApp(MyApp).mount('#app')
+    </script>
+
+</body>
+
+</html>

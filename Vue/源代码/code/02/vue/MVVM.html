@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+    </head>
+ 
+    <body>
+        <!--这是View-->
+        <div id="app">
+            {{ message }}
+        </div>
+    </body>
+    <script src="vue3.js"></script>
+    <script>
+        // 这是Model
+        var exampleData = {
+            message: 'Hello World!'
+        }
+ 
+        // 创建一个 Vue 实例或 "ViewModel"
+        // 它连接 View 与 Model
+        Vue.createApp({
+            data(){
+                return exampleData;
+            }
+        }).mount('#app');
+    </script>
+</html>

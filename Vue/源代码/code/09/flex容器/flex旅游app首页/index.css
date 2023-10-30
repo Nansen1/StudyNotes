@@ -1,0 +1,135 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+ul {
+    list-style: none;
+}
+a {
+    text-decoration: none;
+    color: #222;
+}
+div {
+    box-sizing: border-box;
+}
+
+
+.search-bar {
+    background-color: #F6F6F6;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.search {
+    height: 26px;
+    line-height: 24px;
+    border: 1px solid #ccc;
+    flex: 1;
+    font-size: 12px;
+    color: #666;
+    margin: 7px 10px;
+    padding-left: 25px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
+}
+
+.travel-nav{
+    padding: 20px;
+    background: -webkit-linear-gradient(left, #ddec96, #d685b4);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.travel-nav div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 12px;
+}
+.travel-nav div:hover{
+    color: #ccc;
+    font-weight: bolder;
+}
+.travel-nav div span:nth-child(1){
+    margin-top: 6px;
+    color:  rgb(158, 156, 156);
+}
+.travel-nav .line{
+    display: inline-block;
+    width: 10px;
+    height: 2px;
+    background: -webkit-linear-gradient(left, #a1d0eb, #caeb96);
+    margin-bottom: 8px;
+    margin-top: 4px;
+}
+
+.nav-main {
+    display: flex;
+    height: 100px;
+    background-color: pink;
+}
+.nav-main{
+    margin: 8px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-items {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-items a {
+    flex: 1;
+    text-align: center;
+    line-height: 44px;
+    color: #fff;
+    font-size: 14px;
+    text-shadow: 1px 1px rgba(0, 0, 0, .2);
+}
+
+.nav-main:nth-child(1) {
+    background: -webkit-linear-gradient(left, #FA5A55, #FA994D);
+}
+
+.nav-main:nth-child(2) {
+    background: -webkit-linear-gradient(left, #4B90ED, #53BCED);
+}
+
+.nav-main:nth-child(3) {
+    background: -webkit-linear-gradient(left, #34C2A9, #6CD559);
+}
+
+
+
+.footer {
+    margin-top: 8px;
+    display: flex;
+    background-color: rgb(218, 189, 231);
+    flex-wrap: wrap;
+}
+
+.footer li {
+    flex: 30%;
+}
+
+.footer a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-icon {
+    width: 0;
+    height: 0;
+    background-color: pink;
+    margin-top: 4px;
+    border: 8px solid transparent;
+    border-top: 8px solid #fff;
+}

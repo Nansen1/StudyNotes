@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/vue3.js"></script>
+</head>
+<body>
+    <!-- view视图部分 -->
+    <div id='add-app'>
+        <button @click='addNum'>加1</button>
+        <div>结果为<span>{{result}}</span></div>
+    </div>
+    <script>
+        const AddApp = {
+            // state状态
+            data: function(){
+                return {
+                    result:0
+                }
+            },
+            // actions
+            methods: {
+                addNum(){
+                    this.result+=1;
+                }
+            }
+        }
+        const app = Vue.createApp(AddApp).mount('#add-app')
+    </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单击穿透现象</title>
+    <style>
+        body{
+            width: 100%;
+            height: 100vh;
+        }
+        .mask {
+            width: 100%;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.3);
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="mask" id="mask"></div>
+    <script>
+        window.onload = function () {
+            var body = document.getElementsByTagName("body")[0];
+            var mask = document.getElementById('mask');
+            mask.addEventListener('touchstart', function () {
+                mask.style.display = 'none';
+            })
+            body.addEventListener('click', function () {
+                mask.style.display = 'block';
+            })
+        }
+    </script>
+</body>
+
+</html>

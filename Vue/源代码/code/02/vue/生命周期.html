@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue3.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{id}}--{{name}}--{{num}}</p>
+        <button @click="changeName">点击</button>
+    </div>
+
+    <script>
+        const {
+            ref, toRefs, reactive, computed, onBeforeMount, onMounted, 
+            onBeforeUpdate, onUpdated, onBeforeUnmount, onUnmounted, 
+            onActivated, onDeactivated, onErrorCaptured
+        } = Vue
+
+        const app =Vue.createApp({
+            setup() {
+                // reactive 数据双向绑定
+                const state = reactive({
+                    id: 1,
+                    name: 'Tom',
+                    num: computed(() => state.id += 5) //计算属性
+                })
+
+                function changeName(){
+                    state.name = 'Lucy'
+                }
+
+                onBeforeMount(() => {
+                    // ... 例如返回首页 隐藏按钮
+                    console.log('onBeforeMount');
+                })
+                onMounted(() => {
+                    // 获取数据等
+                    console.log('onMounted');
+                })
+                onBeforeUpdate(() => {
+                    console.log('onBeforeUpdate');
+                })
+                onUpdated(() => {
+                    console.log('onUpdated');
+                })
+                onBeforeUnmount(() => {
+                    console.log('onBeforeUnmount');
+                })
+                onUnmounted(() => {
+                    console.log('onUnmounted');
+                })
+                onActivated(() => {
+                    console.log('onActivated');
+                })
+                onDeactivated(() => {
+                    console.log('onDeactivated');
+                })
+                onErrorCaptured(() => {
+                    console.log('onErrorCaptured');
+                })
+
+                return {
+                    // toRefs转换为响应式数据
+                    ...toRefs(state),
+                    changeName,
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+</body>
+
+</html>

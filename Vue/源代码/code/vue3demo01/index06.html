@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/vue3.js"></script>
+    <!-- <script src="https://unpkg.com/vue@next"></script> -->
+</head>
+
+<body>
+    <div id="app">
+        <p>当前日期为： {{ showDate() }}</p>
+        <p>结果：{{ num }}</p>
+        <button @click="addNum">加2</button>
+        <button @click="subNum">减1</button>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    num: 0
+                }
+            },
+            methods: {
+                addNum(){
+                    this.num += 2;
+                },
+                subNum(){
+                    this.num--;
+                },
+                showDate(){
+                    return new Date();
+                }
+            }
+        })
+        const vm = app.mount('#app')
+        console.log(vm.num)  // 0
+        vm.addNum() 
+        console.log(vm.num)  // 2
+        vm.subNum()
+        console.log(vm.num)  // 1
+    </script>
+</body>
+
+</html>

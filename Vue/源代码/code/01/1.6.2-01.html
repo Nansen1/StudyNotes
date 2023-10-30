@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/vue3.js"></script>
+    <!-- <script src="https://unpkg.com/vue@next"></script> -->
+</head>
+<body>
+    <div id="app">
+        <h1>你好:{{ message }}</h1>
+    </div>
+
+    <script>
+        const MyApp = {
+            data: function(){
+                return {
+                    message:'hello world!'
+                }
+            }
+        }
+        const app = Vue.createApp(MyApp).mount('#app')
+    </script>
+</body>
+</html>

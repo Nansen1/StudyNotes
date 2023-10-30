@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动画</title>
+    <script src="./vue3.js"></script>
+    <style>
+        .fade-enter-from,
+        .fade-leave-to {
+            opacity: 0;
+        }
+
+        .fade-enter-to,
+        .fade-leave-from {
+            opacity: 1;
+        }
+
+        /* 可以设置不同的进入和离开动画   */
+        /* 设置持续时间和动画函数        */
+        .fade-enter-active,
+        .fade-leave-active {
+            transition: all 1s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h3>动态组件切换过渡动画</h3>
+        <button @click="toggleBtn">切换组件</button>
+        <transition name="fade">
+            <component :is="isShow ? 'home' : 'about'"></component>
+        </transition>
+    </div>
+
+    <script>
+        const { ref } = Vue;
+        const Home = {
+            name: 'Home',
+            template: `<div>Home页面</div>`
+        }
+        const About = {
+            name: 'About',
+            template: `<div>About页面</div>`
+        }
+        const App = Vue.createApp({
+            components: {
+                Home,
+                About
+            },
+            setup() {
+                const isShow = ref(false);
+
+                function toggleBtn() {
+                    isShow.value = !isShow.value
+                }
+                return {
+                    isShow,
+                    toggleBtn
+                }
+            }
+        });
+
+        App.mount('#app');
+    </script>
+
+</body>
+
+</html>

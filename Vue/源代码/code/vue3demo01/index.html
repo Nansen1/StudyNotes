@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/vue3.js"></script>
+    <!-- <script src="https://unpkg.com/vue@next"></script> -->
+</head>
+<body>
+    <div id="counter">
+        <h1>counter:{{ num }}</h1>
+    </div>
+
+    <script>
+        // 配置对象
+        const Counter = {
+            // data(){
+            //     return {
+            //         num:0
+            //     }
+            // }
+            data: function(){
+                return {
+                    num:0
+                }
+            }
+        }
+
+        // 创建一个应用将配置的对象counter的内容渲染到选择器是#counter的元素上
+        let app = Vue.createApp(Counter).mount('#counter')
+        console.log(app) //是一个Proxy代理对象,所以修改app.num会直接实现响应式
+    </script>
+</body>
+</html>

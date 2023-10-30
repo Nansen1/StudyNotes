@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动画</title>
+    <script src="./vue3.js"></script>
+    <style>
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h3>具名插槽</h3>
+        <my-comp>
+            <template v-slot:header>
+                <h1>头部内容</h1>
+              </template>
+            
+              <template v-slot:default>
+                <p>主要内容</p>
+                <p>其他内容</p>
+              </template>
+            
+              <template v-slot:footer>
+                <p>页脚内容</p>
+              </template>
+        </my-comp>
+        <!-- <my-comp>
+            <template #header>
+                <h1>头部内容</h1>
+              </template>
+            
+              <template #default>
+                <p>主要内容</p>
+                <p>其他内容</p>
+              </template>
+            
+              <template #footer>
+                <p>页脚内容</p>
+              </template>
+        </my-comp> -->
+    </div>
+
+    <script>
+        const MyComp = {
+            name: 'my-comp',
+            template: `
+            <div class="container">
+                <header name="header">
+                    <slot name="header"></slot>
+                </header>
+                <main>
+                    <slot ></slot>
+                </main>
+                <footer>
+                    <slot name="footer"></slot>
+                </footer>
+            </div>
+            `
+        }
+        const App = Vue.createApp({
+            components: {
+                'my-comp': MyComp
+            }
+        });
+        App.mount('#app');
+    </script>
+
+</body>
+
+</html>

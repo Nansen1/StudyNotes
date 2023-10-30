@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue3.js"></script>
+    <script src="../vue-router.global.js"></script>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            height: 200px;
+            width: 100%;
+            background-color: skyblue;
+            margin-bottom: 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="app">
+        <h1>滚动行为</h1>
+        <router-view></router-view>
+    </div>
+
+    <script>
+        const Home = { template: `<div>--首页---</div><router-view></router-view>` }
+        const ProductList = {
+            template: `<div>
+            <p>---ProductList---</p>
+            <ul>
+                <li>product1</li>  
+                <li>product2</li>  
+                <li>product3</li>  
+                <li>product4</li>    
+                <li>product5</li>  
+                <li>product6</li>  
+                <li>product7</li>  
+                <li>product8</li>  
+            </ul>
+            </div>` }
+
+
+        const scrollBehavior = (to, from, savedPosition) => {
+            let returnData = {}
+            if (savedPosition) {
+                returnData = savedPosition
+            }
+            else {
+                returnData.x = 0
+                returnData.y = 0
+            }
+            return returnData
+        }
+
+        const routes = [
+            {
+                path: '/',
+                name: 'Home',
+                component: Home, /* 首页 */
+                children: [
+                    {
+                        path: '/productList',
+                        name: 'ProductList',
+                        component: ProductList, /* 产品列表 */
+                    },
+                ]
+            }
+        ]
+
+        const router = VueRouter.createRouter({
+            history: VueRouter.createWebHashHistory(),
+            routes,
+            scrollBehavior
+        })
+
+
+        const app = Vue.createApp({})
+        app.use(router)
+
+        app.mount('#app')
+
+    </script>
+</body>
+
+</html>

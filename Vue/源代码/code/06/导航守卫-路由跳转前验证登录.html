@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue3.js"></script>
+    <script src="../vue-router.global.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1>路由跳转前验证是否登录</h1>
+        <router-link to="/"></router-link>
+        <router-view></router-view>
+    </div>
+
+    <script>    
+        const Home = { template: `<div>--home首页---` }
+        const Login = { template: `<div>login登录页
+            <button @click="logined">点击即可登录</button>
+            </div>`,
+            methods: {
+                logined(){
+                    localStorage.setItem('isLogin','true');
+                }
+            }
+        }
+        const productsList = { template: `<div>--productsList商品列表页---` }
+        const productsDetail = { template: `<div>productsDetail商品详情页</div>` }
+        const Cart = { template: `<div>--Cart购物车页---` }
+        const Profile = { template: `<div>Profile个人中心页</div>` }
+
+        const routes = [
+            {
+                path: '/', // 默认进入路由
+                redirect: '/home'  //重定向
+            },
+            {
+                path: '/login',
+                name: 'login',
+                component: Login
+            },
+            {
+                path: '/home',
+                name: 'home',
+                component: Home
+            },
+            {
+                path: '/product-list',
+                name: 'product-list',
+                component: productsList
+            },
+            {
+                path: '/product-detail',
+                name: 'product-detail',
+                component: productsDetail
+            },
+            {
+                path: '/cart',
+                name: 'cart',
+                component: Cart
+            },
+            {
+                path: '/profile',
+                name: 'profile',
+                component: Profile
+            }
+        ]
+
+
+        const router = VueRouter.createRouter({
+            history: VueRouter.createWebHashHistory(),
+            routes
+        })
+
+        // 全局路由守卫
+        router.beforeEach((to, from, next) => {
+            console.log('全局导航守卫');
+            // 以下路由页面需要在登录以后才能访问
+            const nextRoute = ['home', 'product-list', 'product-detail', 'cart', 'profile'];
+            let isLogin = localStorage.getItem('isLogin'); // 是否登录
+            // 未登录状态；当路由到nextRoute指定页时，跳转至login
+            if (nextRoute.indexOf(to.name) >= 0) {
+                if (isLogin!='true') {
+                    console.log('这些路由页面需要登录之后才能访问，请先登录');
+                    router.push({ name: 'login' })
+                }
+            }
+            // 已登录状态；当路由到login时，跳转至home 
+            if (to.name === 'login') {
+                if (isLogin==='true') {
+                    router.push({ name: 'home' });
+                }
+            }
+            next();
+        });
+
+
+        const app = Vue.createApp({
+            setup(){
+                localStorage.setItem('isLogin', 'false');
+            }
+        })
+        app.use(router)
+
+        app.mount('#app')
+
+    </script>
+</body>
+
+</html>
